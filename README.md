@@ -29,4 +29,4 @@ $ python run.py
 
 http://localhost:5000/play
 
-![Screen Shot](https://raw.githubusercontent.com/dongri/play/master/play/static/ss.png)
+![Screen Shot](https://raw.githubusercontent.com/dongri/play/master/play/static/screenshot.png)
