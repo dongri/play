@@ -1,0 +1,83 @@
+html {
+    height: 100%;
+    background: black;
+}
+body {
+    /* height: 100%; */
+    background: black;
+    color: white;
+}
+
+.container {
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 60%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.control-input{
+    width: calc( 100% - 100px ) ;
+    float: left;
+}
+.control-button {
+    float: right;
+}
+
+input.is-primary {
+    background: #000;
+    color: white;
+}
+
+a, a:hover {
+    color: white;
+}
+
+a.is-black {
+    border: #00d1b2 1px solid !important;
+}
+
+label {
+    color: white !important;
+}
+
+#player {
+    pointer-events:none;
+    border: #333 1px solid;
+}
+
+#player-control {
+    float: right;
+}
+
+#playlist {
+    margin-top: 20px;
+}
+
+#playinput {
+    margin-top: 20px;
+}
+
+input.is-primary::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #999;
+}
+input.is-primary:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #999;
+   opacity: 1;
+}
+input.is-primary::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #999;
+   opacity: 1;
+}
+input.is-primary:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #999;
+}
+input.is-primary::-ms-input-placeholder { /* Microsoft Edge */
+   color: #999;
+}
+
+.playing-gif {
+    height: 18px;
+    margin-left: 5px;
+}
