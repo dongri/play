@@ -26,3 +26,5 @@ https://developers.google.com/youtube/registering_an_application
 ```
 $ python run.py
 ```
+
+http://localhost:5000/play
