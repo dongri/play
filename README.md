@@ -36,7 +36,7 @@ $ python run.py
 
 http://localhost:5000/play
 
-<img src="https://raw.githubusercontent.com/dongri/play/master/play/static/screenshot.png">
+<img src="https://raw.githubusercontent.com/dongri/play/master/play/static/screenshots.png">
 
 ### Slack
 <img src="https://raw.githubusercontent.com/dongri/play/master/play/static/slack.png" width="500">
