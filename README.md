@@ -39,4 +39,4 @@ http://localhost:5000/play
 <img src="https://raw.githubusercontent.com/dongri/play/master/play/static/screenshot.png">
 
 ### Slack
-<img src="https://raw.githubusercontent.com/dongri/play/master/play/static/slack.png" style="width: 500px;border: 1px #999 solid;">
+<img src="https://raw.githubusercontent.com/dongri/play/master/play/static/slack.png" width="500">
