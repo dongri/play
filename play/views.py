@@ -55,11 +55,12 @@ def post():
 def pop():
     global g_sec
     vid = request.form["video_id"]
+    item = r.lindex(REDIS_KEY, 0)
+    if item.decode('utf-8').split(DIVISION_KEY)[0] == vid:
+        r.lpop(REDIS_KEY)
     c = r.llen(REDIS_KEY)
-    if c > 1:
-        item = r.lindex(REDIS_KEY, 0)
-        if item.decode('utf-8').split(DIVISION_KEY)[0] == vid:
-            r.lpop(REDIS_KEY)
+    if c <= 0:
+        r.rpush(REDIS_KEY, 'LfzRlnfl09Q'+DIVISION_KEY+'"Stretch Your Face" - Tobacco Shirt (Silicon Valley: The Soundtrack) [HQ Audio]')
     g_sec = 0
     return jsonify(play_list())
 
