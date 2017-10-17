@@ -20,8 +20,6 @@ footer {
     margin-right: auto;
     margin-left: auto;
     width: 60%;
-    margin-top: 20px;
-    margin-bottom: 20px;
     position: relative;
     height: auto !important;
     height: 100%;
@@ -29,6 +27,7 @@ footer {
 }
 
 .contents {
+    padding-top: 20px;
     padding-bottom: 120px;
 }
 
