@@ -19,8 +19,13 @@ $ brew install redis
 ```
 $ vim ~/.bashrc
 export GOOGLE_API_KEY=****
+export PLAY_SLACK_URL=**** (optional)
 ```
+Google Key:
 https://developers.google.com/youtube/registering_an_application
+
+Slack Webhook URL:
+https://{team}.slack.com/apps/manage/custom-integrations
 
 ### Play
 ```

@@ -1,10 +1,8 @@
 import re
 import urllib
 import json
-import os
 
-API_KEY = os.getenv("GOOGLE_API_KEY", "")
-API_YOUTUBE_VIDEOS = "https://www.googleapis.com/youtube/v3/videos"
+from play import config
 
 def YTDurationToSeconds(duration):
   match = re.match('PT(\d+H)?(\d+M)?(\d+S)?', duration).groups()
@@ -23,10 +21,23 @@ def GetYoutubeItems(vid):
   headers = {"Content-Type" : "application/json"}
   fields = "items(snippet(channelId,title,categoryId),contentDetails(duration))"
   part = "snippet,contentDetails"
-  url = API_YOUTUBE_VIDEOS + "?id=" + vid + "&key=" + API_KEY + "&fields=" + fields + "&part=" + part
+  url = config.API_YOUTUBE_VIDEOS + "?id=" + vid + "&key=" + config.API_KEY + "&fields=" + fields + "&part=" + part
   req = urllib.request.Request(url, headers=headers, method=method)
   with urllib.request.urlopen(req) as response:
       response_body = response.read().decode("utf-8")
       result_objs = json.loads(response_body)
       # for result_obj in result_objs["items"]:
       return result_objs["items"]
+
+def PostToSlack(text):
+  url = config.SLACK_URL
+  if url == "":
+    return
+  method = "POST"
+  headers = {"Content-Type" : "application/json"}
+  obj = {"text": text, "username": "Play", "icon_emoji": ":musical_score:"}
+  json_data = json.dumps(obj).encode("utf-8")
+  request = urllib.request.Request(url, data=json_data, method=method, headers=headers)
+  with urllib.request.urlopen(request) as response:
+      response_body = response.read().decode("utf-8")
+      print(response_body)
