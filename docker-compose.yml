@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+  play_redis:
+    image: redis:latest
+    container_name: play_redis
+    ports:
+      - "16379:6379"
+
+  play_server:
+    container_name: play_server
+    build:
+      context: .
+      dockerfile: devDockerfile
+    environment:
+      - PLAY_ENV=docker
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - PLAY_SLACK_URL=${PLAY_SLACK_URL}
+    volumes:
+      - .:/src/play
+    logging:
+      options:
+        max-size: "500k"
+    ports:
+      - "5000:5000"

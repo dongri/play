@@ -10,8 +10,13 @@ from play import app
 from play import util
 from play import config
 
-if os.getenv("REDISTOGO_URL")!=None:       
+if os.getenv("REDISTOGO_URL") != None:
     r = redis.from_url(os.getenv("REDISTOGO_URL"))
+elif os.getenv("PLAY_ENV") == "docker":
+    HOST='play_redis'
+    PORT=6379
+    DB=0
+    r=redis.Redis(host=HOST, port=PORT, db=DB)
 else:
     HOST='localhost'
     PORT=6379

@@ -1,4 +1,14 @@
-# Play
+# Play on Docker
+
+```
+$ git clone git@github.com:dongri/play.git
+$ cd play
+$ docker-compose up
+
+$ curl http://localhost:5000/play
+```
+
+# Play on macOS
 
 ### Python
 ```
