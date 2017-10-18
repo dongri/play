@@ -61,7 +61,6 @@ $(document).ready(function () {
         var url = $("#youtube-url").val();
         var query = url.split("?");
         var params = query.pop().split("&");
-        $("#youtube-url").val("");
         for (var i in params) {
             var p = params[i].split("=");
             if (p[0] == "v") {
@@ -73,6 +72,7 @@ $(document).ready(function () {
             return
         }
         post("/post", { 'video_id': videoId }, function(playList){
+            $("#youtube-url").val("");
             $('#ul').empty();
             for (var prop in playList) {
                 item = playList[prop];

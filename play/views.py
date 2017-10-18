@@ -87,6 +87,37 @@ def now():
     dict = {"vid":g_vid, "sec":diff}
     return jsonify(dict)
 
+@app.route('/api/queue', methods=['POST'])
+def api_queue():
+    youtube_url = request.json["youtube_url"]
+    query = youtube_url.split("?")
+    params = query[1].split("&")
+    vid = ""
+    for p in params:
+        t = p.split("=")
+        if t[0] == "v":
+            vid = t[1]
+    items = util.GetYoutubeItems(vid)
+    for result_obj in items:
+        duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
+        if duration < 600:
+            title = result_obj["snippet"]["title"]
+            r.rpush(config.REDIS_KEY, vid+config.DIVISION_KEY+title)
+            return jsonify(result="OK", title=title)
+    return jsonify(result="NG", title="")
+
+@app.route('/api/list', methods=['GET'])
+def api_list():
+    list = play_list()
+    pl = []
+    for l in list:
+        t = l.split(config.DIVISION_KEY)
+        vid = t[0]
+        title = t[1]
+        song = {"video_id": vid, "title": title}
+        pl.append(song)
+    return jsonify(pl)
+
 def play_list():
     play_list = r.lrange(config.REDIS_KEY, 0, -1)
     list = []
