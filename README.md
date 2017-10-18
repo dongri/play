@@ -5,7 +5,7 @@ $ git clone git@github.com:dongri/play.git
 $ cd play
 $ docker-compose up
 
-$ curl http://localhost:5000/play
+$ open http://localhost:5000/play
 ```
 
 # Play on macOS
