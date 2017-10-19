@@ -103,7 +103,7 @@ def api_queue():
         if duration < 600:
             title = result_obj["snippet"]["title"]
             r.rpush(config.REDIS_KEY, vid+config.DIVISION_KEY+title)
-            return jsonify(result="OK", title=title)
+            return jsonify(result="OK", title=title, video_id=vid)
     return jsonify(result="NG", title="")
 
 @app.route('/api/list', methods=['GET'])
