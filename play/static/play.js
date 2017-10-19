@@ -73,17 +73,7 @@ $(document).ready(function () {
         }
         post("/post", { 'video_id': videoId }, function(playList){
             $("#youtube-url").val("");
-            $('#ul').empty();
-            for (var prop in playList) {
-                item = playList[prop];
-                //vid = item.split("<fuck>")[0];
-                title = item.split("<fuck>")[1];
-                if (prop == 0) {
-                    $('#ul').append('<li>' + title + '<img src="/static/playing.gif" class="playing-gif"></li>');
-                } else {
-                    $('#ul').append('<li>' + title + '</li>');
-                }
-            }
+            renderPlayList(playList);
         });
     });
     $('#mute').on('click', function() {
@@ -98,16 +88,7 @@ $(document).ready(function () {
 
 function getPlayList() {
     get("/list", function(playList){
-        $('#ul').empty();
-        for (var prop in playList) {
-            item = playList[prop];
-            title = item.split("<fuck>")[1];
-            if (prop == 0) {
-                $('#ul').append('<li>' + title + '<img src="/static/playing.gif" class="playing-gif"></li>');
-            } else {
-                $('#ul').append('<li>' + title + '</li>');
-            }
-        }
+        renderPlayList(playList);
         doPlay();
     });
 }
@@ -117,6 +98,37 @@ function popPlayList() {
         getPlayList();
     });
 }
+
+function like(vid) {
+    post("/like", {'video_id': vid}, function(playList) {
+        setItem(vid, true);
+        get("/list", function(playList){
+            renderPlayList(playList);
+        });
+    });
+}
+
+function renderPlayList(playList) {
+    $('#ul').empty();
+    for (var prop in playList) {
+        item = playList[prop];
+        t = item.split("<fuck>");
+        vid = t[0];
+        title = t[1];
+        disabled = "";
+        likeStatus = "Like";
+        if (getItem(vid)) {
+            disabled = "disabled";
+            likeStatus = "Liked";
+        }
+        if (prop == 0) {
+            $('#ul').append('<li><a class="button btn-like '+disabled+'" onClick="like(\''+vid+'\')" >'+likeStatus+'</a>' + title + '<img src="/static/playing.gif" class="playing-gif"></li>');
+        } else {
+            $('#ul').append('<li><a class="button btn-like '+disabled+'"  onClick="like(\''+vid+'\')">'+likeStatus+'</a>' + title + '</li>');
+        }
+    }
+}
+
 
 // Methods 
 function post(path, data, cb) {
@@ -169,3 +181,15 @@ function get(path, cb) {
     });
 }
 
+function setItem(key, val) {
+    window.localStorage.setItem(key, val);
+}
+function getItem(key) {
+    return window.localStorage.getItem(key);
+}
+function removeItem(key) {
+    window.localStorage.removeItem(key);
+}
+function clear() {
+    window.localStorage.clear();
+}

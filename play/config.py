@@ -5,6 +5,7 @@ API_YOUTUBE_VIDEOS = "https://www.googleapis.com/youtube/v3/videos"
 
 REDIS_KEY = "playlist"
 DIVISION_KEY = "<fuck>"
+REDIS_LIKE_KEY = "likelist"
 
 DEFAULT_VIDEO_ID = 'LfzRlnfl09Q'
 DEFAULT_VIDEO_TITLE = 'Silicon Valley: The Soundtrack'

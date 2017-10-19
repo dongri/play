@@ -52,6 +52,19 @@ a.is-black {
     border: #00d1b2 1px solid !important;
 }
 
+a.btn-like, a.btn-like:hover {
+    background: black;
+    border: 1px #888 solid;
+    color: white;
+    height: 24px;
+    margin-right: 5px;
+}
+
+a.disabled {
+    pointer-events: none;
+    color: #999;
+}
+
 label {
     color: white !important;
 }
@@ -72,6 +85,10 @@ label {
 
 #playinput {
     margin-top: 20px;
+}
+
+#ul li {
+    margin-bottom: 5px;
 }
 
 input.is-primary::-webkit-input-placeholder { /* WebKit, Blink, Edge */
