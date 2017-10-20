@@ -113,3 +113,11 @@ input.is-primary::-ms-input-placeholder { /* Microsoft Edge */
     height: 18px;
     margin-left: 5px;
 }
+
+#loading {
+	width: 40px; /* gif画像の幅 */
+	height: 40px; /* gif画像の高さ */
+	position: fixed; /* gif画像をスクロールさせない */
+	right: 80px; /* gif画像を画面横中央へ */
+	top: 80px; /* gif画像を画面縦中央へ */
+}

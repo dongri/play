@@ -56,6 +56,7 @@ function onPlayerStateChange(event) {
 }
 
 $(document).ready(function () {
+    $("#loading").hide();
     $('#queue').on('click', function () {
         var videoId;
         var url = $("#youtube-url").val();
@@ -132,6 +133,7 @@ function renderPlayList(playList) {
 
 // Methods 
 function post(path, data, cb) {
+    $("#loading").show();
     $.ajax({
         type: "POST",
         url: path,
@@ -153,6 +155,7 @@ function post(path, data, cb) {
     })
     .always(function (data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
         // console.log("call: " + path);
+        $("#loading").hide();
     });
 }
 
