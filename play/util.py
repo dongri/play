@@ -44,3 +44,16 @@ def PostToSlack(text):
   with urllib.request.urlopen(request) as response:
       response_body = response.read().decode("utf-8")
       print(response_body)
+
+def GetVideoId(url):
+    youtu_be = re.findall(r"^https://youtu\.be/([^?/]+)", url)
+    if len(youtu_be) >= 1:
+        return youtu_be[0]
+    else:
+        query = url.split("?")
+        params = query[1].split("&")
+        for p in params:
+            t = p.split("=")
+            if t[0] == "v":
+                return t[1]
+    return ""

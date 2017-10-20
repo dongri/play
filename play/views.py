@@ -104,16 +104,10 @@ def dope():
             r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title)
     return jsonify()
 
+
 @app.route('/api/queue', methods=['POST'])
 def api_queue():
-    youtube_url = request.json["youtube_url"]
-    query = youtube_url.split("?")
-    params = query[1].split("&")
-    vid = ""
-    for p in params:
-        t = p.split("=")
-        if t[0] == "v":
-            vid = t[1]
+    vid = util.GetVideoId(request.json["youtube_url"])
     items = util.GetYoutubeItems(vid)
     for result_obj in items:
         duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
