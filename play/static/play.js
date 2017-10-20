@@ -99,8 +99,8 @@ function popPlayList() {
     });
 }
 
-function like(vid) {
-    post("/like", {'video_id': vid}, function(playList) {
+function dope(vid) {
+    post("/dope", {'video_id': vid}, function(playList) {
         setItem(vid, true);
         get("/list", function(playList){
             renderPlayList(playList);
@@ -116,15 +116,15 @@ function renderPlayList(playList) {
         vid = t[0];
         title = t[1];
         disabled = "";
-        likeStatus = "Like";
+        dopeStatus = "dope";
         if (getItem(vid)) {
             disabled = "disabled";
-            likeStatus = "Liked";
+            dopeStatus = "dope";
         }
         if (prop == 0) {
-            $('#ul').append('<li><a class="button btn-like '+disabled+'" onClick="like(\''+vid+'\')" >'+likeStatus+'</a>' + title + '<img src="/static/playing.gif" class="playing-gif"></li>');
+            $('#ul').append('<li><a class="button btn-dope ' + disabled + '" onClick="dope(\'' + vid + '\')" >' +dopeStatus+'</a>' + title + '<img src="/static/playing.gif" class="playing-gif"></li>');
         } else {
-            $('#ul').append('<li><a class="button btn-like '+disabled+'"  onClick="like(\''+vid+'\')">'+likeStatus+'</a>' + title + '</li>');
+            $('#ul').append('<li><a class="button btn-dope ' + disabled + '"  onClick="dope(\'' + vid + '\')">' +dopeStatus+'</a>' + title + '</li>');
         }
     }
 }

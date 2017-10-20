@@ -88,8 +88,8 @@ def now():
     dict = {"vid":g_vid, "sec":diff}
     return jsonify(dict)
 
-@app.route('/like', methods=['POST'])
-def like():
+@app.route('/dope', methods=['POST'])
+def dope():
     video_id = request.form["video_id"]
     list = play_list()
     for i in list:
@@ -97,11 +97,11 @@ def like():
         vid = t[0]
         title = t[1]
         if vid == video_id:
-            for l in like_list():
+            for l in dope_list():
                 lvid = l.split(config.DIVISION_KEY)[0]
                 if lvid == video_id:
                     return jsonify()
-            r.rpush(config.REDIS_LIKE_KEY, vid+config.DIVISION_KEY+title)
+            r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title)
     return jsonify()
 
 @app.route('/api/queue', methods=['POST'])
@@ -135,8 +135,8 @@ def api_list():
         pl.append(song)
     return jsonify(pl)
 
-@app.route('/api/like', methods=['POST'])
-def api_like():
+@app.route('/api/dope', methods=['POST'])
+def api_dope():
     global g_vid
     video_id = g_vid
     list = play_list()
@@ -145,11 +145,11 @@ def api_like():
         vid = t[0]
         title = t[1]
         if vid == video_id:
-            for l in like_list():
+            for l in dope_list():
                 lvid = l.split(config.DIVISION_KEY)[0]
                 if lvid == video_id:
                     return jsonify(result="OK", title=title)
-            r.rpush(config.REDIS_LIKE_KEY, vid+config.DIVISION_KEY+title)
+            r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title)
     return jsonify(result="OK", title=title)
 
 def play_list():
@@ -159,15 +159,15 @@ def play_list():
         list.append(l.decode('utf-8'))
     return list
 
-def like_list():
-    like_list = r.lrange(config.REDIS_LIKE_KEY, 0, -1)
+def dope_list():
+    dope_list = r.lrange(config.REDIS_DOPE_KEY, 0, -1)
     list = []
-    for l in like_list:
+    for l in dope_list:
         list.append(l.decode('utf-8'))
     return list
 
 def random_video():
-    list = like_list()
+    list = dope_list()
     if len(list) <= 0:
         return config.DEFAULT_VALUE
     r = random.randint(0,len(list)-1)
