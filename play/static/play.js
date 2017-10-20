@@ -55,19 +55,30 @@ function onPlayerStateChange(event) {
     }
 }
 
+function getVideoIDfromURL(url) {
+    var query = url.split("?");
+    if (url.match(/^https:\/\/youtu.be/)) {
+      /*
+       * https://youtu.be/foobar?another=parameters
+       * Extract videoId: ^^^^^^ from URL.
+       */
+      return query[0].replace(/\/$/, "").split("/").pop();
+    } else {
+      var params = query.pop().split("&");
+      for (var i in params) {
+          var p = params[i].split("=");
+          if (p[0] == "v") {
+              return p[1];
+          }
+      }
+    }
+    return '';
+}
+
 $(document).ready(function () {
     $("#loading").hide();
     $('#queue').on('click', function () {
-        var videoId;
-        var url = $("#youtube-url").val();
-        var query = url.split("?");
-        var params = query.pop().split("&");
-        for (var i in params) {
-            var p = params[i].split("=");
-            if (p[0] == "v") {
-                videoId = p[1];
-            }
-        }
+        var videoId = getVideoIDfromURL($("#youtube-url").val());
         if (videoId == '') {
             alert('Error!');
             return
