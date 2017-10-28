@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Play for Mac</title>
+  <link rel="stylesheet" type="text/css" href="/static/bulma.css">
+  <link rel="stylesheet" type="text/css" href="/static/electron/app.css">
+  </head>
+  <body>
+    <h2 id="title">Play</h2>
+    <div id="play-button">
+      <img src="/static/electron/on.png" id="play-start-end">
+    </div>
+
+    <div id="playlist">
+      <ul id="ul">
+      </ul>
+    </div>
+
+
+    <div id="control">
+      <div class="control-input">
+        <input class="input" type="text" id="youtube-url" name="youtube-url" placeholder="Youtube URL">
+      </div>
+      <div class="control-button">
+        <a class="button is-light" id="queue">Queue</a>
+      </div>
+    </div>
+
+    <div id="quit">
+      <a class="button is-black">Quit ⌘+Q</a>
+    </div>
+  
+    <div id="youtube-audio"></div>
+
+    <div id="loading">
+      <img src="/static/electron/loading.gif">
+    </div>
+
+    <script>
+      // for electron
+      if (typeof module !== 'undefined') {  
+        window.__tempModuleExports__ = module.exports;
+        module.exports = false;
+      }
+    </script>
+    <script src='/static/jquery.min.js'></script>
+    <script>
+      // for electron
+      if (window.__tempModuleExports__) {  
+        module.exports = window.__tempModuleExports__;
+        window.__tempModuleExports__ = null;
+        delete window.__tempModuleExports__;
+      }
+    </script>
+    <script src='/static/electron/app.js'></script>
+  </body>
+</html>
