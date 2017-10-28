@@ -50,7 +50,7 @@ http://localhost:5000/play
 
 ### Slack
 <kbd>
-<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/slack.png" width="500">
+<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/slack.png" width="400">
 </kbd>
 
 # macOS
@@ -64,4 +64,4 @@ $ electron .
 $ ./package.sh
 ```
 
-<img src="https://raw.githubusercontent.com/dongri/play/master/server/screenshots/macOS.png" width="500">
+<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/macOS.png">
