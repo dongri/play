@@ -46,10 +46,10 @@ $ python run.py
 
 http://localhost:5000/play
 
-<img src="https://raw.githubusercontent.com/dongri/play/master/play/server/static/screenshots.png">
+<img src="https://raw.githubusercontent.com/dongri/play/master/server/play/static/screenshots.png">
 
 ### Slack
-<img src="https://raw.githubusercontent.com/dongri/play/master/play/server/static/slack.png" width="500">
+<img src="https://raw.githubusercontent.com/dongri/play/master/server/play/static/slack.png" width="500">
 
 
 # macOS
