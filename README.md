@@ -64,4 +64,4 @@ $ electron .
 $ ./package.sh
 ```
 
-<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/macOS.png">
+<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/macOS.png" width="400">
