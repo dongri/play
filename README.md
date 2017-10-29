@@ -2,7 +2,7 @@
 
 ```
 $ git clone git@github.com:dongri/play.git
-$ cd play
+$ cd play/server
 $ docker-compose up
 
 $ open http://localhost:5000/play
@@ -55,7 +55,8 @@ http://localhost:5000/play
 
 # macOS
 ```
-$ cd electron
+$ git clone git@github.com:dongri/play.git
+$ cd play/electron
 $ vim main.js
 const webURL = "http://localhost:5000/static/electron/index.html"
 
