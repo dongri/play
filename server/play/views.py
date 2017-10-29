@@ -3,6 +3,8 @@ import time
 import redis
 import random
 
+from datetime import datetime, timezone, timedelta
+
 from flask import render_template
 from flask import request
 from flask import jsonify
@@ -166,7 +168,9 @@ def add_queue(video_id):
         duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
         if duration > 0 or duration < 600:
             title = result_obj["snippet"]["title"]
-            r.rpush(config.REDIS_KEY, video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration))
+            redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
+            r.rpush(config.REDIS_KEY, redis_value)
+            daily_log(redis_value)
             return title
     return ""
 
@@ -183,3 +187,9 @@ def add_dope(video_id):
             r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
             return list, title
     return list, ""
+
+def daily_log(video_value):
+    JST = timezone(timedelta(hours=+9), 'JST')
+    jst_now = datetime.fromtimestamp(time.time(), JST)
+    date_str = jst_now.strftime('%Y-%m-%d')
+    r.rpush(date_str+"_list", video_value)
