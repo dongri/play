@@ -35,6 +35,7 @@ const createTray = () => {
 
   tray.window = new BrowserWindow(defaults);
   tray.positioner = new Positioner(tray.window);
+  // tray.window.loadURL.loadURL('file://' + __dirname + '/index.html');
   tray.window.loadURL(webURL, {"extraHeaders" : "pragma: no-cache\n"});
   tray.window.on('blur', hideWindow);
   tray.window.setVisibleOnAllWorkspaces(true);
