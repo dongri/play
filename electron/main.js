@@ -1,5 +1,5 @@
 // Sets variables (const)
-const {app, BrowserWindow, Tray, session, Menu} = require('electron')
+const { app, BrowserWindow, Tray, session, Menu, globalShortcut} = require('electron')
 const path = require('path')
 const Positioner = require('electron-positioner');
 const assetsDirectory = path.join(__dirname, 'img')
@@ -61,6 +61,10 @@ const createTray = () => {
 
 const hideWindow = () => {
   if (!tray.window) { return; }
+
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
+
   tray.window.hide();
 }
 
@@ -72,4 +76,29 @@ function showWindow (trayPos) {
   var position = tray.positioner.calculate(noBoundsPosition || windowPosition, trayPos);
   tray.window.setPosition(position.x, position.y);
   tray.window.show();
+
+  // Copy
+  globalShortcut.register('CmdOrCtrl+C', function () {
+    let code = `document.execCommand('copy');`;
+    tray.window.webContents.executeJavaScript(code);
+  });
+
+  // Paste
+  globalShortcut.register('CmdOrCtrl+V', function () {
+    let code = `document.execCommand('paste');`;
+    tray.window.webContents.executeJavaScript(code);
+  });
+
+  // Select All
+  globalShortcut.register('CmdOrCtrl+A', function () {
+    let code = `document.execCommand('selectAll');`;
+    tray.window.webContents.executeJavaScript(code);
+  });
+
+  // Cut
+  globalShortcut.register('CmdOrCtrl+X', function () {
+    let code = `document.execCommand('cut');`;
+    tray.window.webContents.executeJavaScript(code);
+  });
+
 }
