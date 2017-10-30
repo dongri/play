@@ -155,12 +155,29 @@ def dope_list():
         list.append(l.decode('utf-8'))
     return list
 
+def random_list():
+    random_list = r.lrange(config.REDIS_RANDOM_KEY, 0, -1)
+    list = []
+    for l in random_list:
+        list.append(l.decode('utf-8'))
+    return list
+
 def random_video():
     list = dope_list()
     if len(list) <= 0:
         return config.DEFAULT_VALUE
-    r = random.randint(0,len(list)-1)
-    return list[r]
+    rand = random.randint(0,len(list)-1)
+    rand_video = list[rand]
+    t = rand_video.split(config.DIVISION_KEY)
+    rand_vid = t[0]
+    rand_list = random_list()
+    for vid in rand_list:
+        if vid == rand_vid:
+            return random_video()
+    r.rpush(config.REDIS_RANDOM_KEY, rand_vid)
+    if len(rand_list) >= len(list) * 0.5:
+        r.lpop(config.REDIS_RANDOM_KEY)
+    return rand_video
 
 def add_queue(video_id):
     items = util.GetYoutubeItems(video_id)
