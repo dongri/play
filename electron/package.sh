@@ -1,6 +1,6 @@
 #!/bin/sh
 OUT="/Users/${USER}/Desktop"
-ICON="./img/icon.icns"
+ICON="./build/icon.icns"
 OPTION="--platform=darwin --arch=x64"
 VERSION=1.0.4
 

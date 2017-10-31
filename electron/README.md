@@ -14,19 +14,9 @@ $ ./package.sh
 
 # Create DMG
 ```
-$ pyenv global system
-$ python -V           
-Python 2.7.10
-
-$ npm install -g electron-installer-dmg
-$ cd ~/Desktop
-$ electron-installer-dmg ./Play-darwin-x64/Play.app Play
-$ ll 
-drwxr-xr-x   7 dongri  staff   238B Oct 31 14:28 Play-darwin-x64
--rw-r--r--@  1 dongri  staff    44M Oct 31 14:29 Play.dmg
-```
-
-Resource busyと言われた時は
-```
-$ sudo diskutil umount "/Volumes/Play"
+$ npm install -g electron-builder
+$ electron-builder build
+$ ll docs
+-rw-r--r--@ 1 dongri  staff    44M Oct 31 15:37 Play-0.0.1.dmg
+drwxr-xr-x  3 dongri  staff   102B Oct 31 15:36 mac
 ```
