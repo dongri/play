@@ -12,9 +12,11 @@ $ open http://localhost:5000/play
 
 ### Python
 ```
-$ brew install python3
-$ ln -s python3 python
-$ ln -s pip3 pip
+$ brew install pyenv
+$ pyenv install -v 3.6.1
+$ pyenv global 3.6.1
+$ python -V
+Python 3.6.1
 
 $ pip install flask
 $ pip install redis
