@@ -183,7 +183,7 @@ def add_queue(video_id):
     items = util.GetYoutubeItems(video_id)
     for result_obj in items:
         duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
-        if duration > 0 && duration < 600:
+        if duration > 0 and duration < 600:
             title = result_obj["snippet"]["title"]
             redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
             r.rpush(config.REDIS_KEY, redis_value)
