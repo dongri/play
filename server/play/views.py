@@ -148,6 +148,14 @@ def api_dope_random():
         r.rpush(config.REDIS_KEY, random_video())
     return jsonify(result="OK")
 
+@app.route('/api/dope/number', methods=['POST'])
+def api_dope_number():
+    number = request.json["number"]
+    list = dope_list()
+    dope = list[number-1]
+    r.rpush(config.REDIS_KEY, dope)
+    return list, title
+
 def play_list():
     play_list = r.lrange(config.REDIS_KEY, 0, -1)
     list = []
