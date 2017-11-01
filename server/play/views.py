@@ -152,7 +152,7 @@ def api_dope_random():
 def api_dope_number():
     number = request.json["number"]
     list = dope_list()
-    dope = list[number-1]
+    dope = list[int(number)-1]
     r.rpush(config.REDIS_KEY, dope)
     return list, title
 
