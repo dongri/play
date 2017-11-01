@@ -8,6 +8,8 @@ from datetime import datetime, timezone, timedelta
 from flask import render_template
 from flask import request
 from flask import jsonify
+from flask import send_file
+from flask import current_app
 
 from play import app
 from play import util
@@ -33,6 +35,11 @@ g_dur = 0
 @app.route("/")
 def index():
     return render_template('index.html', message="/play")
+
+@app.route("/download/osx")
+def download_osx():
+    path = os.path.join(current_app.root_path, "static/download/Play-0.0.1.dmg")
+    return send_file(path, as_attachment=True)
 
 @app.route('/play')
 def play():

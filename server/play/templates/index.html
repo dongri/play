@@ -1,12 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="contents">
-    <p><a href="{{ message }}">{{ message }}</a></p>
-    <script type="text/javascript">
-        setTimeout("redirect()", 0);
-        function redirect() {
-            location.href = '/play';
-        }
-    </script>
+    <div class="home">
+        <div class="home-title">♫ Play ♫</div>
+        <div class="home-platform">
+            <a href="/download/osx">
+                <div class="platform">
+                    Download for OS X
+                </div>
+            </a>
+            <a href="/play">
+                <div class="platform">
+                    Open Play in your browser
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

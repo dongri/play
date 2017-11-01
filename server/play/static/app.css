@@ -31,10 +31,34 @@ footer {
     padding-bottom: 120px;
 }
 
+.home {
+    text-align: center;
+}
+
+.home-title {
+    font-size: 60px;
+    padding: 30px;
+}
+
+.home-platform {
+    padding-top: 80px;
+}
+.platform {
+    width: 250px;
+    font-size: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #000;
+    margin: 10px;
+}
+
 .control-input{
     width: calc( 100% - 100px ) ;
     float: left;
 }
+
 .control-button {
     float: right;
 }
