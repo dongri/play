@@ -53,7 +53,7 @@ const createTray = () => {
       tray.window = null
   })
 
-  setTimeout( function() { showWindow(tray.getBounds()); }, 3 );
+  setTimeout( function() { showWindow(tray.getBounds()); }, 5 );
 
   // tray.window.webContents.openDevTools()
   

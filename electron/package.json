@@ -12,7 +12,18 @@
     "Youtube"
   ],
   "dependencies": {
-    "electron": "1.7.9",
     "electron-positioner": "3.0.0"
+  },
+  "devDependencies": {
+    "electron": "1.7.9"
+  },
+  "build": {
+    "appId": "org.gitly.macos.play",
+    "mac": {
+        "target": "dmg"
+    },
+    "directories": {
+        "output": "docs"
+    }
   }
 }
