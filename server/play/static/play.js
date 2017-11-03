@@ -115,6 +115,36 @@ $(document).ready(function () {
             player.setVolume(100);
         }
     });
+    
+    var stream = new EventSource("/stream");
+    stream.onopen = function() {
+        console.log('SSE: OnOpen');
+    };
+    stream.onerror = function (event) {
+        console.log('SSE: OnError');
+        console.log(event);
+        alert("sse error");
+        stream.close();
+    };
+    stream.onmessage = function(e) {
+        console.log('SSE: OnMessage');
+        var data = eval(e.data);
+        renderPlayList(data);
+    };
+    stream.onclose = function(code, reason) {
+        console.log('SSE: OnClose');
+        console.log(code, reason);
+        stream.close();
+    };
+    // window.onbeforeunload = function(e) {
+    //     stream.close();
+    //     alert("aaaa");
+    //     return "aaaa";
+    // };
+    window.addEventListener('beforeunload', function() {
+        stream.close();
+    });
+
 });
 
 function popPlayList() {
@@ -199,7 +229,7 @@ function get(path, cb) {
         }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
-        alert("server error");
+        alert("server error: "+ errorThrown);
     })
     .always(function (data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
         // console.log("call: " + path);

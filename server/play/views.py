@@ -10,6 +10,7 @@ from flask import request
 from flask import jsonify
 from flask import send_file
 from flask import current_app
+from flask import Response
 
 from play import app
 from play import util
@@ -31,6 +32,7 @@ else:
 g_vid = ""
 g_sec = 0
 g_dur = 0
+g_add = False
 
 @app.route("/")
 def index():
@@ -195,6 +197,7 @@ def random_video():
     return rand_video
 
 def add_queue(video_id):
+    global g_add
     items = util.GetYoutubeItems(video_id)
     for result_obj in items:
         duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
@@ -202,6 +205,7 @@ def add_queue(video_id):
             title = result_obj["snippet"]["title"]
             redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
             r.rpush(config.REDIS_KEY, redis_value)
+            g_add = True
             daily_log(redis_value)
             return title
     return ""
@@ -225,3 +229,14 @@ def daily_log(video_value):
     jst_now = datetime.fromtimestamp(time.time(), JST)
     date_str = jst_now.strftime('%Y-%m-%d')
     r.rpush(date_str+"_list", video_value)
+
+@app.route('/stream')
+def streamed_response():
+    def generate():
+        while True:
+            global g_add
+            # time.sleep(3)
+            if g_add == True:
+                yield "data: {}\n\n".format(play_list())
+                g_add = False
+    return Response(generate(), mimetype="text/event-stream")
