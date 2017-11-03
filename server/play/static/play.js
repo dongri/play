@@ -20,7 +20,7 @@ function createPlayer() {
             width: w,
             height: h,
             playerVars: {
-                'autoplay': 0,
+                'autoplay': 1,
                 'controls': 0,
                 'disablekb': 1,
                 'fs': 0,
