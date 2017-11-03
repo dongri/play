@@ -108,6 +108,25 @@ function renderPlayList(playList) {
         Math.floor($(window).width() - $('.btn-dope').width() - 60)
     );
 
+    stream();
+}
+
+function stream() {
+    var source = new EventSource("/stream");
+    source.addEventListener('greeting', function(event) {
+        var json = JSON.parse(event.data);
+        renderPlayList(json.list);
+    }, false);
+
+    source.addEventListener('dope', function(event) {
+        var audio = new Audio('/static/dope.mp3');
+        audio.play();
+    }, false);
+
+    source.addEventListener('fuck', function(event) {
+        var audio = new Audio('/static/fuck.mp3');
+        audio.play();
+    }, false);
 }
 
 function dope(vid) {

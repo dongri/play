@@ -4,7 +4,7 @@ const path = require('path')
 const Positioner = require('electron-positioner');
 const assetsDirectory = path.join(__dirname, 'img')
 
-const webURL = "https://play.origami.co/static/electron/index.html"
+const webURL = "http://localhost:5000/static/electron/index.html"
 
 let tray = undefined
 let window = undefined
