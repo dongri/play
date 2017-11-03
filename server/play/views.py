@@ -32,7 +32,6 @@ else:
 g_vid = ""
 g_sec = 0
 g_dur = 0
-g_add = False
 
 @app.route("/")
 def index():
@@ -197,7 +196,6 @@ def random_video():
     return rand_video
 
 def add_queue(video_id):
-    global g_add
     items = util.GetYoutubeItems(video_id)
     for result_obj in items:
         duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
@@ -205,7 +203,6 @@ def add_queue(video_id):
             title = result_obj["snippet"]["title"]
             redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
             r.rpush(config.REDIS_KEY, redis_value)
-            g_add = True
             sse.publish({"list": play_list()}, type='list')
             daily_log(redis_value)
             return title
