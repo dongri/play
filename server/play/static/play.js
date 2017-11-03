@@ -121,7 +121,7 @@ $(document).ready(function () {
 
 function stream() {
     var source = new EventSource("/stream");
-    source.addEventListener('greeting', function(event) {
+    source.addEventListener('list', function(event) {
         var json = JSON.parse(event.data);
         renderPlayList(json.list);
     }, false);

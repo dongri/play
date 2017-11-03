@@ -58,11 +58,6 @@ function doPlay() {
         vid = res.vid;
         sec = res.sec;
         dur = res.dur;
-        // time = dur - sec;
-        // $("#time").val(time);
-        // clearTimeout(timeoutID);
-        // timeCountdown();
-        // alert(vid);
         player.loadVideoById(vid, sec);
         player.playVideo();
         b = $('#play-start-end');
@@ -113,7 +108,7 @@ function renderPlayList(playList) {
 
 function stream() {
     var source = new EventSource("/stream");
-    source.addEventListener('greeting', function(event) {
+    source.addEventListener('list', function(event) {
         var json = JSON.parse(event.data);
         renderPlayList(json.list);
     }, false);

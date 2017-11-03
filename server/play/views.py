@@ -10,7 +10,6 @@ from flask import request
 from flask import jsonify
 from flask import send_file
 from flask import current_app
-# from flask import Response
 from flask_sse import sse
 
 from play import app
@@ -207,7 +206,7 @@ def add_queue(video_id):
             redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
             r.rpush(config.REDIS_KEY, redis_value)
             g_add = True
-            sse.publish({"list": play_list()}, type='greeting')
+            sse.publish({"list": play_list()}, type='list')
             daily_log(redis_value)
             return title
     return ""
@@ -232,14 +231,3 @@ def daily_log(video_value):
     jst_now = datetime.fromtimestamp(time.time(), JST)
     date_str = jst_now.strftime('%Y-%m-%d')
     r.rpush(date_str+"_list", video_value)
-
-# @app.route('/stream')
-# def streamed_response():
-#     def generate():
-#         while True:
-#             global g_add
-#             # time.sleep(3)
-#             if g_add == True:
-#                 yield "data: {}\n\n".format(play_list())
-#                 g_add = False
-#     return Response(generate(), mimetype="text/event-stream")
