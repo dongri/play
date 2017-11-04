@@ -10,6 +10,7 @@ from flask import request
 from flask import jsonify
 from flask import send_file
 from flask import current_app
+from flask_sse import sse
 
 from play import app
 from play import util
@@ -152,7 +153,7 @@ def api_dope_random():
 def api_dope_number():
     number = request.json["number"]
     list = dope_list()
-    dope = list[number-1]
+    dope = list[int(number)-1]
     r.rpush(config.REDIS_KEY, dope)
     return list, title
 
@@ -202,6 +203,7 @@ def add_queue(video_id):
             title = result_obj["snippet"]["title"]
             redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
             r.rpush(config.REDIS_KEY, redis_value)
+            sse.publish({"list": play_list()}, type='list')
             daily_log(redis_value)
             return title
     return ""
@@ -217,6 +219,7 @@ def add_dope(video_id):
                 if lvid == video_id:
                     return list, title
             r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
+            sse.publish({}, type='fuck')
             return list, title
     return list, ""
 

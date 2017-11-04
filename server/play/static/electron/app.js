@@ -58,11 +58,6 @@ function doPlay() {
         vid = res.vid;
         sec = res.sec;
         dur = res.dur;
-        // time = dur - sec;
-        // $("#time").val(time);
-        // clearTimeout(timeoutID);
-        // timeCountdown();
-        // alert(vid);
         player.loadVideoById(vid, sec);
         player.playVideo();
         b = $('#play-start-end');
@@ -108,6 +103,25 @@ function renderPlayList(playList) {
         Math.floor($(window).width() - $('.btn-dope').width() - 60)
     );
 
+    stream();
+}
+
+function stream() {
+    var source = new EventSource("/stream");
+    source.addEventListener('list', function(event) {
+        var json = JSON.parse(event.data);
+        renderPlayList(json.list);
+    }, false);
+
+    source.addEventListener('dope', function(event) {
+        var audio = new Audio('/static/dope.mp3');
+        audio.play();
+    }, false);
+
+    source.addEventListener('fuck', function(event) {
+        var audio = new Audio('/static/fuck.mp3');
+        audio.play();
+    }, false);
 }
 
 function dope(vid) {
