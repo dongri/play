@@ -146,6 +146,11 @@ def dope():
     util.PostToSlack("Dope: " + title)
     return jsonify(list)
 
+@app.route('/fuck', methods=['POST'])
+def fuck():
+    sse.publish({}, type='fuck')
+    return jsonify({'fuck': g_vid})
+
 @app.route('/api/queue', methods=['POST'])
 def api_queue():
     vid = util.GetVideoId(request.json["youtube_url"])
