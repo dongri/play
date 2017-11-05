@@ -135,6 +135,7 @@ def now():
         list = play_list()
         t = list[0].split(config.DIVISION_KEY)
         g_vid, g_dur = t[0], t[2]
+    list = play_list()
     t = list[0].split(config.DIVISION_KEY)
     vid = t[0]
     if vid != g_vid:
@@ -157,6 +158,15 @@ def dope():
 
 @app.route('/fuck', methods=['POST'])
 def fuck():
+    global g_vid, g_dur, g_sec
+    r.lpop(config.REDIS_KEY)
+    list = play_list()
+    if len(list) <= 0:
+        r.rpush(config.REDIS_KEY, random_video())
+    item = r.lindex(config.REDIS_KEY, 0)
+    t = item.decode('utf-8').split(config.DIVISION_KEY)
+    g_vid, g_dur = t[0], t[2]
+    g_sec = 0
     add_fuck(g_vid)
     return jsonify({'fuck': g_vid})
 
@@ -214,7 +224,7 @@ def api_dope_number():
     return list, title
 
 @app.route('/api/fuck', methods=['POST'])
-def fuck():
+def api_fuck():
     global g_vid
     video_id = g_vid
     list, title = add_fuck(video_id)
