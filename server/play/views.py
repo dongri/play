@@ -52,6 +52,7 @@ def daily():
     keys = []
     for k in r.keys("*"+suffix):
         keys.append(k.decode('utf-8').replace(suffix, ""))
+    keys = sorted(keys)
     return render_template('daily.html', keys=keys)
 
 @app.route('/daily/<day>', methods=['GET'])
@@ -112,6 +113,7 @@ def pop():
         g_vid, g_dur = t[0], t[2]
         g_sec = 0
     list = play_list()
+    sse.publish({"list": list}, type='list')
     return jsonify(list)
 
 @app.route('/now', methods=['GET'])
@@ -249,6 +251,7 @@ def add_queue(video_id):
     return ""
 
 def add_dope(video_id):
+    sse.publish({}, type='dope')
     list = play_list()
     for i in list:
         t = i.split(config.DIVISION_KEY)
@@ -259,7 +262,6 @@ def add_dope(video_id):
                 if lvid == video_id:
                     return list, title
             r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
-            sse.publish({}, type='dope')
             return list, title
     return list, ""
 
