@@ -96,13 +96,6 @@ a.btn-dope, a.btn-dope:hover {
     margin-right: 5px;
 }
 
-a.btn-fuck, a.btn-fuck:hover {
-    background: black;
-    border: 1px #333 solid;
-    color: white;
-    text-align: center;
-}
-
 a.disabled {
     pointer-events: none;
     color: #999;

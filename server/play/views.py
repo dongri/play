@@ -146,6 +146,7 @@ def dope():
 
 @app.route('/fuck', methods=['POST'])
 def fuck():
+    sse.publish({}, type='fuck')
     # TODO: skip this song.
     return jsonify({'fuck': g_vid})
 
