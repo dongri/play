@@ -215,8 +215,10 @@ def api_dope_number():
 
 @app.route('/api/fuck', methods=['POST'])
 def fuck():
-    add_fuck(g_vid)
-    return jsonify(result="OK", vid=g_vid)
+    global g_vid
+    video_id = g_vid
+    list, title = add_fuck(video_id)
+    return jsonify(result="OK", title=title)
 
 def play_list():
     play_list = r.lrange(config.REDIS_KEY, 0, -1)
