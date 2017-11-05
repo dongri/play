@@ -166,3 +166,7 @@ input.is-primary::-ms-input-placeholder { /* Microsoft Edge */
 	right: 80px; /* gif画像を画面横中央へ */
 	top: 80px; /* gif画像を画面縦中央へ */
 }
+
+.title {
+    color: #FFF;
+}

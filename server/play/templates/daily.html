@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="contents">
+    <h2 class="title is-2">Dialy</h2>
     {% for key in keys %}
         <div class=flash><a href="/daily/{{key}}">{{ key }}</a></div>
     {% endfor %}

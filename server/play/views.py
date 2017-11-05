@@ -63,7 +63,7 @@ def daily_day(day):
         t = l.decode('utf-8').split(config.DIVISION_KEY)
         h = {"vid": t[0], "title": t[1], "duration": t[2]}
         list.append(h)
-    return render_template('list.html', list=list)
+    return render_template('list.html', list=list, title=day)
 
 @app.route('/dope', methods=['GET'])
 def dope_get():
@@ -72,7 +72,16 @@ def dope_get():
         t = l.split(config.DIVISION_KEY)
         h = {"vid": t[0], "title": t[1], "duration": t[2]}
         list.append(h)
-    return render_template('list.html', list=list)
+    return render_template('list.html', list=list, title="Dope")
+
+@app.route('/fuck', methods=['GET'])
+def fuck_get():
+    list = []
+    for l in fuck_list():
+        t = l.split(config.DIVISION_KEY)
+        h = {"vid": t[0], "title": t[1], "duration": t[2]}
+        list.append(h)
+    return render_template('list.html', list=list, title="Fuck")
 
 @app.route('/queue', methods=['POST'])
 def post_queue():
@@ -98,7 +107,7 @@ def pop():
     global g_vid, g_sec, g_dur
     vid = request.form["video_id"]
     item = r.lindex(config.REDIS_KEY, 0)
-    if item.decode('utf-8').split(config.DIVISION_KEY)[0] == vid:
+    if item != None and item.decode('utf-8').split(config.DIVISION_KEY)[0] == vid:
         r.lpop(config.REDIS_KEY)
         list = play_list()
         if len(list) > 0:
@@ -148,7 +157,7 @@ def dope():
 
 @app.route('/fuck', methods=['POST'])
 def fuck():
-    sse.publish({}, type='fuck')
+    add_fuck(g_vid)
     return jsonify({'fuck': g_vid})
 
 @app.route('/api/queue', methods=['POST'])
@@ -218,6 +227,13 @@ def dope_list():
         list.append(l.decode('utf-8'))
     return list
 
+def fuck_list():
+    fuck_list = r.lrange(config.REDIS_FUCK_KEY, 0, -1)
+    list = []
+    for l in fuck_list:
+        list.append(l.decode('utf-8'))
+    return list
+
 def random_list():
     random_list = r.lrange(config.REDIS_RANDOM_KEY, 0, -1)
     list = []
@@ -267,6 +283,21 @@ def add_dope(video_id):
                 if lvid == video_id:
                     return list, title
             r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
+            return list, title
+    return list, ""
+
+def add_fuck(video_id):
+    sse.publish({}, type='fuck')
+    list = play_list()
+    for i in list:
+        t = i.split(config.DIVISION_KEY)
+        vid, title, dur = t[0], t[1], t[2]
+        if vid == video_id:
+            for l in fuck_list():
+                lvid = l.split(config.DIVISION_KEY)[0]
+                if lvid == video_id:
+                    return list, title
+            r.rpush(config.REDIS_FUCK_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
             return list, title
     return list, ""
 
