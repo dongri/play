@@ -213,6 +213,11 @@ def api_dope_number():
     r.rpush(config.REDIS_KEY, dope)
     return list, title
 
+@app.route('/api/fuck', methods=['POST'])
+def fuck():
+    add_fuck(g_vid)
+    return jsonify(result="OK", vid=g_vid)
+
 def play_list():
     play_list = r.lrange(config.REDIS_KEY, 0, -1)
     list = []
