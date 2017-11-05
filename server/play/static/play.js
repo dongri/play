@@ -134,6 +134,7 @@ function stream() {
     source.addEventListener('fuck', function(event) {
         var audio = new Audio('/static/fuck.mp3');
         audio.play();
+        doPlay();
     }, false);
 }
 
@@ -151,6 +152,7 @@ function dope(vid) {
 }
 
 function fuck() {
+    popPlayList();
     post("/fuck", {}, function(result) {
         console.log(result);
     });
