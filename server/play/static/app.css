@@ -12,8 +12,20 @@ footer {
     position:absolute;
     bottom: 0;
     width: 100%;
-    height: 50px;
-    text-align: center;
+    height: 60px;
+}
+
+.footer-menu {
+    float: left;
+}
+
+.footer-copyright {
+    float: right;
+    /* color: #666; */
+}
+
+.l {
+    color: #666;
 }
 
 .container {
@@ -117,6 +129,7 @@ label {
 
 #playinput {
     margin-top: 20px;
+    height: 20px;
 }
 
 #ul li {

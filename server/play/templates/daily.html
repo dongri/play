@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="contents">
+    {% for key in keys %}
+        <div class=flash><a href="/daily/{{key}}">{{ key }}</a></div>
+    {% endfor %}
+</div>
+{% endblock %}
