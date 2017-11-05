@@ -130,6 +130,12 @@ function dope(vid) {
     });
 }
 
+function fuck() {
+    post("/fuck", {}, function(result) {
+        console.log(result);
+    });
+}
+
 function renderPlayList(playList) {
     $('#ul').empty();
     for (var prop in playList) {

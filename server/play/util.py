@@ -25,6 +25,7 @@ def GetYoutubeItems(vid):
   fields = "items(snippet(channelId,title,categoryId),contentDetails(duration))"
   part = "snippet,contentDetails"
   url = config.API_YOUTUBE_VIDEOS + "?id=" + vid + "&key=" + config.API_KEY + "&fields=" + fields + "&part=" + part
+  print('url: {0}'.format(url))
   req = urllib.request.Request(url, headers=headers, method=method)
   with urllib.request.urlopen(req) as response:
       response_body = response.read().decode("utf-8")
