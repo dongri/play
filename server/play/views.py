@@ -10,6 +10,7 @@ from flask import request
 from flask import jsonify
 from flask import send_file
 from flask import current_app
+from flask_sse import sse
 
 from play import app
 from play import util
@@ -44,6 +45,46 @@ def download_osx():
 @app.route('/play')
 def play():
     return render_template('play.html')
+
+@app.route('/daily', methods=['GET'])
+def daily():
+    suffix = "_list"
+    keys = []
+    for k in r.keys("*"+suffix):
+        keys.append(k.decode('utf-8').replace(suffix, ""))
+    return render_template('daily.html', keys=keys)
+
+@app.route('/daily/<day>', methods=['GET'])
+def daily_day(day):
+    suffix = "_list"
+    list = []
+    for l in r.lrange(day+suffix, 0, -1):
+        t = l.decode('utf-8').split(config.DIVISION_KEY)
+        h = {"vid": t[0], "title": t[1], "duration": t[2]}
+        list.append(h)
+    return render_template('list.html', list=list)
+
+@app.route('/dope', methods=['GET'])
+def dope_get():
+    list = []
+    for l in dope_list():
+        t = l.split(config.DIVISION_KEY)
+        h = {"vid": t[0], "title": t[1], "duration": t[2]}
+        list.append(h)
+    return render_template('list.html', list=list)
+
+@app.route('/queue', methods=['POST'])
+def post_queue():
+    video_id = request.form["video_id"]
+    items = util.GetYoutubeItems(video_id)
+    for result_obj in items:
+        duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
+        if duration > 0 and duration < 600:
+            title = result_obj["snippet"]["title"]
+            redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
+            r.rpush(config.REDIS_KEY, redis_value)
+            sse.publish({"list": play_list()}, type='list')
+    return jsonify(play_list())
 
 @app.route('/post', methods=['POST'])
 def post():
@@ -157,7 +198,7 @@ def api_dope_random():
 def api_dope_number():
     number = request.json["number"]
     list = dope_list()
-    dope = list[number-1]
+    dope = list[int(number)-1]
     r.rpush(config.REDIS_KEY, dope)
     return list, title
 
@@ -207,6 +248,7 @@ def add_queue(video_id):
             title = result_obj["snippet"]["title"]
             redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
             r.rpush(config.REDIS_KEY, redis_value)
+            sse.publish({"list": play_list()}, type='list')
             daily_log(redis_value)
             return title
     return ""
@@ -222,6 +264,7 @@ def add_dope(video_id):
                 if lvid == video_id:
                     return list, title
             r.rpush(config.REDIS_DOPE_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
+            sse.publish({}, type='dope')
             return list, title
     return list, ""
 
@@ -230,3 +273,11 @@ def daily_log(video_value):
     jst_now = datetime.fromtimestamp(time.time(), JST)
     date_str = jst_now.strftime('%Y-%m-%d')
     r.rpush(date_str+"_list", video_value)
+
+@app.after_request
+def add_header(r):
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r

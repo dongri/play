@@ -20,7 +20,7 @@ function createPlayer() {
             width: w,
             height: h,
             playerVars: {
-                'autoplay': 0,
+                'autoplay': 1,
                 'controls': 0,
                 'disablekb': 1,
                 'fs': 0,
@@ -115,7 +115,27 @@ $(document).ready(function () {
             player.setVolume(100);
         }
     });
+    
+    stream();
 });
+
+function stream() {
+    var source = new EventSource("/stream");
+    source.addEventListener('list', function(event) {
+        var json = JSON.parse(event.data);
+        renderPlayList(json.list);
+    }, false);
+
+    source.addEventListener('dope', function(event) {
+        var audio = new Audio('/static/dope.mp3');
+        audio.play();
+    }, false);
+
+    source.addEventListener('fuck', function(event) {
+        var audio = new Audio('/static/fuck.mp3');
+        audio.play();
+    }, false);
+}
 
 function popPlayList() {
     post("/pop", {'video_id': vid}, function(playList) {
@@ -205,7 +225,7 @@ function get(path, cb) {
         }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
-        alert("server error");
+        alert("server error: "+ errorThrown);
     })
     .always(function (data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
         // console.log("call: " + path);
