@@ -123,6 +123,16 @@ function stream() {
         audio.play();
         doPlay();
     }, false);
+
+    source.addEventListener('error', function (e) {
+        if (source.readyState === EventSource.CONNECTING) { // === 0
+            console.log('reconnet');
+        } else if (source.readyState === EventSource.CLOSED) { // === 2
+            console.log('close');
+            stream();
+        }
+    });
+
 }
 
 function dope(vid) {
