@@ -159,6 +159,8 @@ def dope():
 @app.route('/fuck', methods=['POST'])
 def fuck():
     global g_vid, g_dur, g_sec
+    video_id = g_vid
+    list, title = add_fuck(video_id)
     r.lpop(config.REDIS_KEY)
     list = play_list()
     if len(list) <= 0:
@@ -167,8 +169,8 @@ def fuck():
     t = item.decode('utf-8').split(config.DIVISION_KEY)
     g_vid, g_dur = t[0], t[2]
     g_sec = 0
-    add_fuck(g_vid)
-    return jsonify({'fuck': g_vid})
+    util.PostToSlack("Fuck: " + title)
+    return jsonify({'fuck': video_id})
 
 @app.route('/api/queue', methods=['POST'])
 def api_queue():
@@ -225,9 +227,16 @@ def api_dope_number():
 
 @app.route('/api/fuck', methods=['POST'])
 def api_fuck():
-    global g_vid
-    video_id = g_vid
+    global g_vid, g_dur, g_sec
     list, title = add_fuck(video_id)
+    r.lpop(config.REDIS_KEY)
+    list = play_list()
+    if len(list) <= 0:
+        r.rpush(config.REDIS_KEY, random_video())
+    item = r.lindex(config.REDIS_KEY, 0)
+    t = item.decode('utf-8').split(config.DIVISION_KEY)
+    g_vid, g_dur = t[0], t[2]
+    g_sec = 0
     return jsonify(result="OK", title=title)
 
 def play_list():
