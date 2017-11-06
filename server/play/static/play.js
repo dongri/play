@@ -6,7 +6,6 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 var vid;
 var timeoutID;
-var source;
 
 function onYouTubeIframeAPIReady() {
     createPlayer();
@@ -121,7 +120,7 @@ $(document).ready(function () {
 });
 
 function stream() {
-    source = new EventSource("/stream");
+    var source = new EventSource("/stream");
     source.addEventListener('list', function(event) {
         var json = JSON.parse(event.data);
         renderPlayList(json.list);
@@ -143,7 +142,7 @@ function stream() {
             console.log('reconnet');
         } else if (source.readyState === EventSource.CLOSED) { // === 2
             console.log('close');
-            source = new EventSource("/stream");
+            stream();
         }
     });
 }
