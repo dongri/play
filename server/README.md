@@ -41,6 +41,28 @@ Slack Webhook URL
 
 https://{team}.slack.com/apps/manage/custom-integrations
 
+### Nginx
+```
+upstream play {
+    server localhost:5000;
+}
+server {
+    listen 80;
+    server_name play.gitly.org;
+    location / {
+       proxy_pass http://play;
+       proxy_read_timeout 24h;
+       proxy_http_version 1.1;
+       proxy_set_header Connection "";
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_buffering off;
+       proxy_cache off;
+       chunked_transfer_encoding off;
+    }
+}
+```
+
 ### Play
 ```
 $ python run.py
