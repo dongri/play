@@ -33,10 +33,6 @@ g_vid = ""
 g_sec = 0
 g_dur = 0
 
-@app.route("/ping", methods=['GET'])
-def get_ping():
-    return jsonify({'message': 'fuck'})
-
 @app.route("/", methods=['GET'])
 def index():
     return render_template('index.html', message="/play")

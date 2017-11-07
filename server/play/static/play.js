@@ -117,7 +117,6 @@ $(document).ready(function () {
     });
     
     stream();
-    ssePing();
 });
 
 function stream() {
@@ -159,14 +158,9 @@ function sseReconnect(source) {
     source.removeEventListener('dope', sseDopeEvent, false);
     source.removeEventListener('fuck', sseFuckEvent, false);
     source.removeEventListener('error', sseError, false);
-    window.removeEventListener('beforeunload', sseClose, false)
+    window.removeEventListener('beforeunload', sseClose, false);
+    source = null;
     stream();
-}
-function ssePing() {
-    get("/ping", function (res) {
-        console.log(res);
-    });
-    setTimeout('ssePing()', 1000*10);
 }
 
 function popPlayList() {
