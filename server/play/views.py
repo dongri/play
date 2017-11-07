@@ -42,12 +42,12 @@ def download_osx():
     path = os.path.join(current_app.root_path, "static/download/Play-0.0.1.dmg")
     return send_file(path, as_attachment=True)
 
-@app.route('/play')
-def play():
+@app.route('/play', methods=['GET'])
+def get_play():
     return render_template('play.html')
 
 @app.route('/daily', methods=['GET'])
-def daily():
+def get_daily():
     suffix = "_list"
     keys = []
     for k in r.keys("*"+suffix):
@@ -56,7 +56,7 @@ def daily():
     return render_template('daily.html', keys=keys)
 
 @app.route('/daily/<day>', methods=['GET'])
-def daily_day(day):
+def get_daily_day(day):
     suffix = "_list"
     list = []
     for l in r.lrange(day+suffix, 0, -1):
@@ -66,7 +66,7 @@ def daily_day(day):
     return render_template('list.html', list=list, title=day)
 
 @app.route('/dope', methods=['GET'])
-def dope_get():
+def get_dope():
     list = []
     for l in dope_list():
         t = l.split(config.DIVISION_KEY)
@@ -75,7 +75,7 @@ def dope_get():
     return render_template('list.html', list=list, title="Dope")
 
 @app.route('/fuck', methods=['GET'])
-def fuck_get():
+def get_fuck():
     list = []
     for l in fuck_list():
         t = l.split(config.DIVISION_KEY)
@@ -85,25 +85,12 @@ def fuck_get():
 
 @app.route('/queue', methods=['POST'])
 def post_queue():
-    video_id = request.form["video_id"]
-    items = util.GetYoutubeItems(video_id)
-    for result_obj in items:
-        duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
-        # if duration > 0 and duration < 600:
-        title = result_obj["snippet"]["title"]
-        redis_value = video_id+config.DIVISION_KEY+title+config.DIVISION_KEY+str(duration)
-        r.rpush(config.REDIS_KEY, redis_value)
-        sse.publish({"list": play_list()}, type='list')
-    return jsonify(play_list())
-
-@app.route('/post', methods=['POST'])
-def post():
     vid = request.form["video_id"]
     title = add_queue(vid)
     return jsonify(play_list())
 
 @app.route('/pop', methods=['POST'])
-def pop():
+def post_pop():
     global g_vid, g_sec, g_dur
     vid = request.form["video_id"]
     item = r.lindex(config.REDIS_KEY, 0)
@@ -126,7 +113,7 @@ def pop():
     return jsonify(list)
 
 @app.route('/now', methods=['GET'])
-def now():
+def get_now():
     global g_vid, g_sec, g_dur
     list = play_list()
     if len(list) <= 0:
@@ -150,31 +137,19 @@ def now():
     return jsonify(dict)
 
 @app.route('/dope', methods=['POST'])
-def dope():
+def post_dope():
     video_id = request.form["video_id"]
     list, title = add_dope(video_id)
     util.PostToSlack("Dope: " + title)
     return jsonify(list)
 
 @app.route('/fuck', methods=['POST'])
-def fuck():
-    global g_vid, g_dur, g_sec
-    video_id = g_vid
-    list, title = add_fuck(video_id)
-    r.lpop(config.REDIS_KEY)
-    list = play_list()
-    if len(list) <= 0:
-        r.rpush(config.REDIS_KEY, random_video())
-    item = r.lindex(config.REDIS_KEY, 0)
-    t = item.decode('utf-8').split(config.DIVISION_KEY)
-    g_vid, current_title, g_dur = t[0], t[1], t[2]
-    g_sec = 0
-    util.PostToSlack("Fuck: " + title)
-    util.PostToSlack("Now playing - " + current_title)
+def post_fuck():
+    video_id = fuck()
     return jsonify({'fuck': video_id})
 
 @app.route('/api/queue', methods=['POST'])
-def api_queue():
+def post_api_queue():
     vid = util.GetVideoId(request.json["youtube_url"])
     title = add_queue(vid)
     if title == "":
@@ -183,7 +158,7 @@ def api_queue():
         return jsonify(result="OK", title=title)
 
 @app.route('/api/list', methods=['GET'])
-def api_list():
+def get_api_list():
     list = play_list()
     pl = []
     for l in list:
@@ -194,14 +169,14 @@ def api_list():
     return jsonify(pl)
 
 @app.route('/api/dope', methods=['POST'])
-def api_dope():
+def post_api_dope():
     global g_vid
     video_id = g_vid
     list, title = add_dope(video_id)
     return jsonify(result="OK", title=title)
 
 @app.route('/api/dope/list', methods=['GET'])
-def api_dope_list():
+def get_api_dope_list():
     list = dope_list()
     dl = []
     for l in list:
@@ -212,14 +187,14 @@ def api_dope_list():
     return jsonify(dl)
 
 @app.route('/api/dope/random', methods=['POST'])
-def api_dope_random():
+def post_api_dope_random():
     count = request.json["count"]
     for i in range(int(count)):
         r.rpush(config.REDIS_KEY, random_video())
     return jsonify(result="OK")
 
 @app.route('/api/dope/number', methods=['POST'])
-def api_dope_number():
+def post_api_dope_number():
     number = request.json["number"]
     list = dope_list()
     dope = list[int(number)-1]
@@ -227,21 +202,9 @@ def api_dope_number():
     return list, title
 
 @app.route('/api/fuck', methods=['POST'])
-def api_fuck():
-    global g_vid, g_dur, g_sec
-    video_id = g_vid
-    list, title = add_fuck(video_id)
-    r.lpop(config.REDIS_KEY)
-    list = play_list()
-    if len(list) <= 0:
-        r.rpush(config.REDIS_KEY, random_video())
-    item = r.lindex(config.REDIS_KEY, 0)
-    t = item.decode('utf-8').split(config.DIVISION_KEY)
-    g_vid, current_title, g_dur = t[0], t[1], t[2]
-    g_sec = 0
-    util.PostToSlack("Fuck: " + title)
-    util.PostToSlack("Now playing - " + current_title)
-    return jsonify(result="OK", title=title)
+def post_api_fuck():
+    video_id = fuck()
+    return jsonify({'fuck': video_id})
 
 def play_list():
     play_list = r.lrange(config.REDIS_KEY, 0, -1)
@@ -330,6 +293,22 @@ def add_fuck(video_id):
             r.rpush(config.REDIS_FUCK_KEY, vid+config.DIVISION_KEY+title+config.DIVISION_KEY+dur)
             return list, title
     return list, ""
+
+def fuck():
+    global g_vid, g_dur, g_sec
+    video_id = g_vid
+    list, title = add_fuck(video_id)
+    r.lpop(config.REDIS_KEY)
+    list = play_list()
+    if len(list) <= 0:
+        r.rpush(config.REDIS_KEY, random_video())
+    item = r.lindex(config.REDIS_KEY, 0)
+    t = item.decode('utf-8').split(config.DIVISION_KEY)
+    g_vid, current_title, g_dur = t[0], t[1], t[2]
+    g_sec = 0
+    util.PostToSlack("Fuck: " + title)
+    util.PostToSlack("Now playing - " + current_title)
+    return video_id
 
 def daily_log(video_value):
     JST = timezone(timedelta(hours=+9), 'JST')

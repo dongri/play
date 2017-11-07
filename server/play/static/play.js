@@ -44,7 +44,7 @@ function timeCountdown() {
         time = 0;
     }
     $("#time").val(time);
-    $("#time").text(time.toString().toMMSS());
+    $("#time").text(time.toString().toHHMMSS());
     timeoutID = setTimeout('timeCountdown()', 1000);
 }
 
@@ -102,7 +102,7 @@ $(document).ready(function () {
             alert('Error!');
             return
         }
-        post("/post", { 'video_id': videoId }, function(playList){
+        post("/queue", { 'video_id': videoId }, function(playList){
             $("#youtube-url").val("");
             renderPlayList(playList);
         });
@@ -141,9 +141,13 @@ function stream() {
         if (source.readyState === EventSource.CONNECTING) { // === 0
             console.log('reconnet');
         } else if (source.readyState === EventSource.CLOSED) { // === 2
-            console.log('close');
-            stream();
+            console.log('close'); //stream();
+            source.close();
         }
+    });
+
+    window.addEventListener('beforeunload', function (event) {
+        source.close();
     });
 }
 
@@ -181,9 +185,9 @@ function renderPlayList(playList) {
             dopeStatus = "dope";
         }
         if (prop == 0) {
-            $('#ul').append('<li><a class="button btn-dope ' + disabled + '" onClick="dope(\'' + video_id + '\')" >' +dopeStatus+'</a>' + title + ' - ' + duration.toMMSS() + '<img src="/static/playing.gif" class="playing-gif"></li>');
+            $('#ul').append('<li><a class="button btn-dope ' + disabled + '" onClick="dope(\'' + video_id + '\')" >' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '<img src="/static/playing.gif" class="playing-gif"></li>');
         } else {
-            $('#ul').append('<li><a class="button btn-dope ' + disabled + '"  onClick="dope(\'' + video_id + '\')">' +dopeStatus+'</a>' + title + ' - ' + duration.toMMSS() + '</li>');
+            $('#ul').append('<li><a class="button btn-dope ' + disabled + '"  onClick="dope(\'' + video_id + '\')">' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '</li>');
         }
     }
 }
@@ -255,7 +259,7 @@ function clear() {
     window.localStorage.clear();
 }
 
-String.prototype.toMMSS = function () {
+String.prototype.toHHMMSS = function () {
     var sec_num = parseInt(this, 10); // don't forget the second param
     var hours   = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -264,5 +268,5 @@ String.prototype.toMMSS = function () {
     if (hours   < 10) {hours   = "0"+hours;}
     if (minutes < 10) {minutes = "0"+minutes;}
     if (seconds < 10) {seconds = "0"+seconds;}
-    return minutes+':'+seconds;
+    return hours+':'+minutes+':'+seconds;
 }

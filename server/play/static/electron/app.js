@@ -128,11 +128,14 @@ function stream() {
         if (source.readyState === EventSource.CONNECTING) { // === 0
             console.log('reconnet');
         } else if (source.readyState === EventSource.CLOSED) { // === 2
-            console.log('close');
-            stream();
+            console.log('close'); // stream();
+            source.close();
         }
     });
 
+    window.addEventListener('beforeunload', function (event) {
+        source.close();
+    });
 }
 
 function dope(vid) {
@@ -151,7 +154,7 @@ $(document).ready(function () {
             alert('Error!');
             return
         }
-        post("/post", { 'video_id': videoId }, function (playList) {
+        post("/queue", { 'video_id': videoId }, function (playList) {
             $("#youtube-url").val("");
             renderPlayList(playList);
         });
