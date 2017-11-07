@@ -117,6 +117,7 @@ $(document).ready(function () {
     });
     
     stream();
+    ssePing();
 });
 
 function stream() {
@@ -160,6 +161,12 @@ function sseReconnect(source) {
     source.removeEventListener('error', sseError, false);
     window.removeEventListener('beforeunload', sseClose, false)
     stream();
+}
+function ssePing() {
+    get("/ping", function (res) {
+        console.log(res);
+    });
+    setTimeout('ssePing()', 1000*10);
 }
 
 function popPlayList() {

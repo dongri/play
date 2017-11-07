@@ -33,11 +33,15 @@ g_vid = ""
 g_sec = 0
 g_dur = 0
 
-@app.route("/")
+@app.route("/ping", methods=['GET'])
+def get_ping():
+    return jsonify({'message': 'fuck'})
+
+@app.route("/", methods=['GET'])
 def index():
     return render_template('index.html', message="/play")
 
-@app.route("/download/osx")
+@app.route("/download/osx", methods=['GET'])
 def download_osx():
     path = os.path.join(current_app.root_path, "static/download/Play-0.0.1.dmg")
     return send_file(path, as_attachment=True)
