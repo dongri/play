@@ -133,6 +133,7 @@ function sseError(e) {
         console.log('reconnet');
     } else if (source.readyState === EventSource.CLOSED) { // === 2
         console.log('close');
+        source.close();
         sseReconnect(source);
     }
 }
