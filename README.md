@@ -50,9 +50,11 @@ http://localhost:5000
 <kbd>
 <img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/ss1.png" width="800">
 </kbd>
+
 <kbd>
 <img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/ss2.png" width="800">
 </kbd>
+
 <kbd>
 <img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/ss3.png" width="800">
 </kbd>
