@@ -18,6 +18,7 @@ $ ln -s pip3 pip
 
 $ pip install flask
 $ pip install redis
+$ pip install flask-sse
 ```
 
 ### Redis
@@ -44,9 +45,16 @@ https://{team}.slack.com/apps/manage/custom-integrations
 $ python run.py
 ```
 
-http://localhost:5000/play
-
-<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/web.png">
+http://localhost:5000
+<kbd>
+<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/ss1.png" width="500">
+</kbd>
+<kbd>
+<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/ss2.png" width="500">
+</kbd>
+<kbd>
+<img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/ss3.png" width="500">
+</kbd>
 
 ### Slack
 <kbd>
@@ -57,12 +65,14 @@ http://localhost:5000/play
 ```
 $ git clone git@github.com:dongri/play.git
 $ cd play/electron
-$ vim main.js
-const webURL = "http://localhost:5000/static/electron/index.html"
+$ vim index.html
+ src="http://localhost:5000/static/electron/index.html"
 
 $ electron .
 
 $ ./package.sh
+$ ./build.sh
+
 ```
 
 <img src="https://raw.githubusercontent.com/dongri/play/master/screenshots/macOS.png" width="400">
