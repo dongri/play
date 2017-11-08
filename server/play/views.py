@@ -198,8 +198,9 @@ def post_api_dope_number():
     number = request.json["number"]
     list = dope_list()
     dope = list[int(number)-1]
-    r.rpush(config.REDIS_KEY, dope)
-    return list, title
+    vid = dope.split(config.DIVISION_KEY)[0]
+    title = add_queue(vid)
+    return jsonify({'title': title})
 
 @app.route('/api/fuck', methods=['POST'])
 def post_api_fuck():
