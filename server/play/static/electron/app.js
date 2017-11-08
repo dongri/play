@@ -102,9 +102,43 @@ function renderPlayList(playList) {
     $(".video_title").width(
         Math.floor($(window).width() - $('.btn-dope').width() - 60)
     );
+}
+
+$(document).ready(function () {
+    $("#loading").hide();
+
+    $('#queue').on('click', function () {
+        var videoId = getVideoIDfromURL($("#youtube-url").val());
+        if (videoId == '') {
+            alert('Error!');
+            return
+        }
+        post("/queue", { 'video_id': videoId }, function (playList) {
+            $("#youtube-url").val("");
+            renderPlayList(playList);
+        });
+    });
+
+    $('#play-start-end').on('click', function () {
+        if (this.src.indexOf('on.png') > -1) {
+            this.src = "/static/electron/off.png";
+            //player.setVolume(100);
+            doPlay();
+            $("#playing-gif").show();
+        } else {
+            this.src = "/static/electron/on.png";
+            //player.setVolume(0);
+            doStop();
+            $("#playing-gif").hide();
+        }
+    });
+
+    $('#playlist').height(
+        $(window).height() - $('#title').height() - $('#play-button').height() - $('#control').height() - $('#quit').height() - 36
+    );
 
     stream();
-}
+})
 
 function stream() {
     var source = new EventSource("/stream");
@@ -155,42 +189,6 @@ function dope(vid) {
         //renderPlayList(playList);
     });
 }
-
-
-$(document).ready(function () {
-    $("#loading").hide();
-
-    $('#queue').on('click', function () {
-        var videoId = getVideoIDfromURL($("#youtube-url").val());
-        if (videoId == '') {
-            alert('Error!');
-            return
-        }
-        post("/queue", { 'video_id': videoId }, function (playList) {
-            $("#youtube-url").val("");
-            renderPlayList(playList);
-        });
-    });
-
-    $('#play-start-end').on('click', function () {
-        if (this.src.indexOf('on.png') > -1) {
-            this.src = "/static/electron/off.png";
-            //player.setVolume(100);
-            doPlay();
-            $("#playing-gif").show();
-        } else {
-            this.src = "/static/electron/on.png";
-            //player.setVolume(0);
-            doStop();
-            $("#playing-gif").hide();
-        }
-    });
-
-    $('#playlist').height(
-        $(window).height() - $('#title').height() - $('#play-button').height() - $('#control').height() - $('#quit').height() - 36
-    );
-
-})
 
 // Methods 
 function post(path, data, cb) {
