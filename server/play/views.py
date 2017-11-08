@@ -191,6 +191,7 @@ def post_api_dope_random():
     count = request.json["count"]
     for i in range(int(count)):
         r.rpush(config.REDIS_KEY, random_video())
+    sse.publish({"list": play_list()}, type='list')
     return jsonify(result="OK")
 
 @app.route('/api/dope/number', methods=['POST'])
