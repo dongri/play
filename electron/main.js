@@ -4,22 +4,22 @@ const path = require('path')
 const Positioner = require('electron-positioner');
 const assetsDirectory = path.join(__dirname, 'img')
 
-const webURL = "http://localhost:5000/static/electron/index.html"
+// const webURL = "http://localhost:5000/static/electron/index.html"
 
-let tray = undefined
-let window = undefined
+let tray = undefined;
+let window = undefined;
  
 var cachedBounds;
 var windowPosition = 'trayCenter';
 
-app.dock.hide()
+app.dock.hide();
 
 app.on('ready', () => {
-  createTray()
+  createTray();
 })
 
 app.on('window-all-closed', () => {
-  app.quit()
+  app.quit();
 })
 
 const createTray = () => {
@@ -35,9 +35,9 @@ const createTray = () => {
 
   tray.window = new BrowserWindow(defaults);
   tray.positioner = new Positioner(tray.window);
-  // tray.window.loadURL.loadURL('file://' + __dirname + '/index.html');
-  var timestamp = new Date().getTime();
-  tray.window.loadURL(webURL+"?"+timestamp, {"extraHeaders" : "pragma: no-cache\n"});
+  tray.window.loadURL('file://' + __dirname + '/index.html');
+  // var timestamp = new Date().getTime();
+  // tray.window.loadURL(webURL+"?"+timestamp, {"extraHeaders" : "pragma: no-cache\n"});
   tray.window.on('blur', hideWindow);
   tray.window.setVisibleOnAllWorkspaces(true);
   
@@ -54,8 +54,8 @@ const createTray = () => {
       tray.window = null
   })
 
-  setTimeout( function() { showWindow(tray.getBounds()); }, 5 );
-
+  setTimeout( function() { showWindow(tray.getBounds()); }, 500 );
+  // showWindow(tray.getBounds());
   // tray.window.webContents.openDevTools()
   
 }
@@ -103,3 +103,7 @@ function showWindow (trayPos) {
   });
 
 }
+
+exports.appQuit = function () {
+  app.quit();
+};
