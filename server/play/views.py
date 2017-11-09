@@ -257,7 +257,7 @@ def add_queue(video_id):
     items = util.GetYoutubeItems(video_id)
     for result_obj in items:
         duration = util.YTDurationToSeconds(result_obj["contentDetails"]["duration"])
-        categoryId = util.YTDurationToSeconds(result_obj["snippet"]["categoryId"])
+        categoryId = result_obj["snippet"]["categoryId"]
         # if duration > 0 and duration < 600:
         if categoryId == "10":
             title = result_obj["snippet"]["title"]
