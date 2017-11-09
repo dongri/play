@@ -9,6 +9,7 @@ var timeoutID;
 
 function onYouTubeIframeAPIReady() {
     createPlayer();
+    $(".contents").show();
 }
 
 function createPlayer() {
@@ -203,6 +204,7 @@ function renderPlayList(playList) {
             $('#ul').append('<li><a class="button btn-dope ' + disabled + '"  onClick="dope(\'' + video_id + '\')">' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '</li>');
         }
     }
+    $("#playinput").show();
 }
 
 
