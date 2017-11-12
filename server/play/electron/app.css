@@ -6,6 +6,16 @@ body {
     height: 100%;
 }
 
+*::-webkit-scrollbar {
+    display: none;
+}
+
+#fixed-div {
+    position: fixed;
+    width: 100%;
+    height: 120px;
+    z-index: 100px;
+}
 #title {
     text-align: center;
     font-size: 20px;
@@ -21,6 +31,16 @@ body {
     padding-bottom: 5px;
     border-bottom: #DDD 1px solid;
     margin-bottom: 5px;
+    background: #FFF;
+}
+
+#playlist {
+    /* background: #AAA; */
+    overflow: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 120px;
+    padding-bottom: 18px;
 }
 
 #ul {
@@ -38,33 +58,9 @@ body {
     cursor: pointer;
 }
 
-#playlist {
-    /* background: #AAA; */
-    overflow: auto;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-#playlist::-webkit-scrollbar {
-  display: none;
-}
-
 .video_title {
     overflow: scroll;
     white-space: nowrap;
-}
-#quit {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-}
-
-#quit .button{
-    width: 100%;
-    height: 30px;
-    background: #EEE;
-    color: #333;
-    font-size: 13px;
 }
 
 .btn-dope {
@@ -72,6 +68,7 @@ body {
     padding: 5px;
     height: 24px;
     margin-right: 5px;
+    z-index: -1;
 }
 
 .playing-gif {
@@ -85,24 +82,4 @@ body {
 	position: absolute;
     left : calc(50% - 20px);
     top : calc(50% - 20px);
-}
-
-#control {
-    position: fixed;
-    bottom: 40px;
-    width: 100%;
-}
-
-.control-input{
-    width: calc( 100% - 90px ) ;
-    float: left;
-    margin-left: 5px;
-}
-.control-button {
-    float: right;
-    margin-right: 5px;
-}
-
-#youtube-url {
-    border: none;
 }

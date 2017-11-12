@@ -10,3 +10,6 @@ else:
 app.register_blueprint(sse, url_prefix='/stream')
 
 from play import views
+
+from play import electron
+app.register_blueprint(electron.app)

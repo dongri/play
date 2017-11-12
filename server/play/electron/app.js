@@ -107,26 +107,14 @@ function renderPlayList(playList) {
 $(document).ready(function () {
     $("#loading").hide();
 
-    $('#queue').on('click', function () {
-        var videoId = getVideoIDfromURL($("#youtube-url").val());
-        if (videoId == '') {
-            alert('Error!');
-            return
-        }
-        post("/queue", { 'video_id': videoId }, function (playList) {
-            $("#youtube-url").val("");
-            renderPlayList(playList);
-        });
-    });
-
     $('#play-start-end').on('click', function () {
         if (this.src.indexOf('on.png') > -1) {
-            this.src = "/static/electron/off.png";
+            this.src = "/electron/off.png";
             //player.setVolume(100);
             doPlay();
             $("#playing-gif").show();
         } else {
-            this.src = "/static/electron/on.png";
+            this.src = "/electron/on.png";
             //player.setVolume(0);
             doStop();
             $("#playing-gif").hide();
@@ -242,24 +230,4 @@ function get(path, cb) {
         .always(function (data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
             $("#loading").hide();
         });
-}
-
-function getVideoIDfromURL(url) {
-    var query = url.split("?");
-    if (url.match(/^https:\/\/youtu.be/)) {
-        /*
-         * https://youtu.be/foobar?another=parameters
-         * Extract videoId: ^^^^^^ from URL.
-         */
-        return query[0].replace(/\/$/, "").split("/").pop();
-    } else {
-        var params = query.pop().split("&");
-        for (var i in params) {
-            var p = params[i].split("=");
-            if (p[0] == "v") {
-                return p[1];
-            }
-        }
-    }
-    return '';
 }
