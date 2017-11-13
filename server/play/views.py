@@ -101,6 +101,7 @@ def post_pop():
             t = list[0].split(config.DIVISION_KEY)
             g_vid, title, g_dur = t[0], t[1], t[2]
             g_sec = 0
+            util.PostToSlack("Now playing - " + title)
     if r.llen(config.REDIS_KEY) <= 0:
         r.rpush(config.REDIS_KEY, random_video())
         list = play_list()
@@ -108,9 +109,6 @@ def post_pop():
         g_vid, g_dur = t[0], t[2]
         g_sec = 0
     list = play_list()
-    t = list[0].split(config.DIVISION_KEY)
-    title = t[1]
-    util.PostToSlack("Now playing - " + title)
     sse.publish({"list": list}, type='list')
     return jsonify(list)
 
