@@ -28,7 +28,7 @@ footer {
 .contents {
     padding-top: 20px;
     padding-bottom: 120px;
-    display: inline-block;
+    display: inline-table;
     width: 100%;
 }
 .home {
