@@ -2,8 +2,12 @@ html {
     height: 100%;
 }
 body {
+    font-family: sans-serif;
     font-size: 15px;
     height: 100%;
+    margin: 0px;
+    padding: 0px;
+    background: white;
 }
 
 *::-webkit-scrollbar {
@@ -23,6 +27,7 @@ body {
     background: #EEE;
     padding: 5px;
     border-bottom: #DDD 1px solid;
+    margin: 0px;
 }
 
 #play-button {
@@ -39,16 +44,17 @@ body {
     overflow: auto;
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 120px;
+    padding-top: 100px;
     padding-bottom: 18px;
 }
 
 #ul {
     list-style: none;
     padding: 0px;
+    margin-top: 10px;
 }
 #ul li {
-    margin-bottom: 5px;
+    margin-bottom: 13px;
     display: -webkit-box;
 }
 
@@ -61,13 +67,21 @@ body {
 .video_title {
     overflow: scroll;
     white-space: nowrap;
+    width: calc( 100% - 90px ) ;
 }
 
-.btn-dope {
+a {
+    cursor: pointer;
+}
+
+a.dope {
     font-size: 13px;
     padding: 5px;
     height: 24px;
     margin-right: 5px;
+    border: 1px #CCC solid;
+    border-radius: 3px;
+    color: #666;
 }
 
 .playing-gif {
@@ -75,7 +89,7 @@ body {
     margin-left: 5px;
 }
 
-#loading {
+#loading img {
 	width: 40px;
 	height: 40px;
 	position: absolute;

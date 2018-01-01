@@ -120,50 +120,6 @@ $(document).ready(function () {
     stream();
 });
 
-function stream() {
-    var source = new EventSource("/stream");
-    source.addEventListener('list', sseListEvent, false);
-    source.addEventListener('dope', sseDopeEvent,false);
-    source.addEventListener('fuck', sseFuckEvent,false);
-    source.addEventListener('error', sseError, false);
-    window.addEventListener('beforeunload', sseClose, false);
-}
-function sseListEvent(e) {
-    var json = JSON.parse(e.data);
-    renderPlayList(json.list);
-}
-function sseDopeEvent(e) {
-    var audio = new Audio('/static/dope.mp3');
-    audio.play();
-}
-function sseFuckEvent(e) {
-    var audio = new Audio('/static/fuck.mp3');
-    audio.play();
-    doPlay();
-}
-function sseError(e) {
-    source = e.currentTarget;
-    if (source.readyState === EventSource.CONNECTING) { // === 0
-        console.log('reconnet');
-    } else if (source.readyState === EventSource.CLOSED) { // === 2
-        console.log('close');
-        source.close();
-        sseReconnect(source);
-    }
-}
-function sseClose(e) {
-    source = e.currentTarget;
-    source.close();
-}
-function sseReconnect(source) {
-    source.removeEventListener('list', sseListEvent, false);
-    source.removeEventListener('dope', sseDopeEvent, false);
-    source.removeEventListener('fuck', sseFuckEvent, false);
-    source.removeEventListener('error', sseError, false);
-    window.removeEventListener('beforeunload', sseClose, false);
-    source = null;
-    stream();
-}
 
 function popPlayList() {
     post("/pop", {'video_id': vid}, function(playList) {
@@ -173,7 +129,6 @@ function popPlayList() {
 
 function dope(vid) {
     post("/dope", {'video_id': vid}, function(playList) {
-        setItem(vid, true);
         renderPlayList(playList);
     });
 }
@@ -186,96 +141,11 @@ function renderPlayList(playList) {
         video_id = t[0];
         title = t[1];
         duration = t[2];
-        disabled = "";
-        dopeStatus = "dope";
-        if (getItem(video_id)) {
-            disabled = "disabled";
-            dopeStatus = "dope";
-        }
         if (prop == 0) {
-            $('#ul').append('<li><a class="dope ' + disabled + '" onClick="dope(\'' + video_id + '\')" >' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '<img src="/static/playing.gif" class="playing-gif"></li>');
+            $('#ul').append('<li><a class="dope" onClick="dope(\'' + video_id + '\')" >Dope</a>' + title + ' - ' + duration.toHHMMSS() + '<img src="/static/playing.gif" class="playing-gif"></li>');
         } else {
-            $('#ul').append('<li><a class="dope ' + disabled + '"  onClick="dope(\'' + video_id + '\')">' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '</li>');
+            $('#ul').append('<li><a class="dope"  onClick="dope(\'' + video_id + '\')">Dope</a>' + title + ' - ' + duration.toHHMMSS() + '</li>');
         }
     }
     $("#playinput").show();
-}
-
-
-// Methods 
-function post(path, data, cb) {
-    $("#loading").show();
-    $.ajax({
-        type: "POST",
-        url: path,
-        timeout: 10000,
-        cache: false,
-        data: data,
-        dataType: 'json'
-    })
-    .done(function (response, textStatus, jqXHR) {
-        if (response.status === "err") {
-            alert("err: " + response.msg);
-        } else {
-            playList = response;
-            cb(playList);
-        }
-    })
-    .fail(function (jqXHR, textStatus, errorThrown) {
-        alert("server error");
-    })
-    .always(function (data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
-        // console.log("call: " + path);
-        $("#loading").hide();
-    });
-}
-
-function get(path, cb) {
-    $.ajax({
-        type: "GET",
-        url: path,
-        timeout: 10000,
-        cache: false,
-        data: {},
-        dataType: 'json'
-    })
-    .done(function (response, textStatus, jqXHR) {
-        if (response.status === "err") {
-            alert("err: " + response.msg);
-        } else {
-            playList = response;
-            cb(playList);
-        }
-    })
-    .fail(function (jqXHR, textStatus, errorThrown) {
-        alert("server error: "+ errorThrown);
-    })
-    .always(function (data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
-        // console.log("call: " + path);
-    });
-}
-
-function setItem(key, val) {
-    window.localStorage.setItem(key, val);
-}
-function getItem(key) {
-    return window.localStorage.getItem(key);
-}
-function removeItem(key) {
-    window.localStorage.removeItem(key);
-}
-function clear() {
-    window.localStorage.clear();
-}
-
-String.prototype.toHHMMSS = function () {
-    var sec_num = parseInt(this, 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-    return hours+':'+minutes+':'+seconds;
 }
