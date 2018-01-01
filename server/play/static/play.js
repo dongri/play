@@ -178,12 +178,6 @@ function dope(vid) {
     });
 }
 
-function fuck() {
-    post("/fuck", {}, function(result) {
-        console.log(result);
-    });
-}
-
 function renderPlayList(playList) {
     $('#ul').empty();
     for (var prop in playList) {
@@ -199,9 +193,9 @@ function renderPlayList(playList) {
             dopeStatus = "dope";
         }
         if (prop == 0) {
-            $('#ul').append('<li><a class="button btn-dope ' + disabled + '" onClick="dope(\'' + video_id + '\')" >' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '<img src="/static/playing.gif" class="playing-gif"></li>');
+            $('#ul').append('<li><a class="dope ' + disabled + '" onClick="dope(\'' + video_id + '\')" >' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '<img src="/static/playing.gif" class="playing-gif"></li>');
         } else {
-            $('#ul').append('<li><a class="button btn-dope ' + disabled + '"  onClick="dope(\'' + video_id + '\')">' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '</li>');
+            $('#ul').append('<li><a class="dope ' + disabled + '"  onClick="dope(\'' + video_id + '\')">' + dopeStatus + '</a>' + title + ' - ' + duration.toHHMMSS() + '</li>');
         }
     }
     $("#playinput").show();

@@ -2,35 +2,20 @@
 
 html {
     height: 100%;
-    background: black;
 }
 body {
     height: 100%;
-    background: black;
-    color: white;
+    background: #1a1a1a;
+    color: #CCC;
     font-family: 'Noto Sans JP', sans-serif;
 }
-
 footer {
     position:absolute;
     bottom: 0;
     width: 100%;
     height: 60px;
+    text-align: center;
 }
-
-.footer-menu {
-    float: left;
-}
-
-.footer-copyright {
-    float: right;
-    /* color: #666; */
-}
-
-.l {
-    color: #666;
-}
-
 .container {
     margin-right: auto;
     margin-left: auto;
@@ -40,21 +25,19 @@ footer {
     height: 100%;
     min-height: 100%;
 }
-
 .contents {
     padding-top: 20px;
     padding-bottom: 120px;
+    display: inline-block;
+    width: 100%;
 }
-
 .home {
     text-align: center;
 }
-
 .home-title {
     font-size: 60px;
     padding: 30px;
 }
-
 .home-platform {
     padding-top: 80px;
 }
@@ -68,114 +51,86 @@ footer {
     color: #fff;
     margin: 10px;
 }
-
-.home-message{
+.home-message {
     font-size: 20px;
     margin-top: 90px;
 }
-.control-input{
-    width: calc( 100% - 80px ) ;
+.control-input {
+    width: calc( 100% - 84px ) ;
     float: left;
 }
-
+.input-youtube-url {
+    width: 100%;
+    border: #666 1px solid;
+    padding: 8px;
+    border-radius: 3px;
+    background: #1a1a1a;
+    font-size: 16px;
+    color: #CCC;
+    outline: 0;
+}
 .control-button {
     float: right;
 }
-
-input.is-primary {
-    background: #000;
-    color: white;
-}
-
 a, a:hover {
-    color: white;
+    color: #CCC;
+    text-decoration: none;
+    cursor: pointer;
 }
-
-a.is-black {
-    border: #00d1b2 1px solid !important;
+a.queue {
+    border: 1px #666 solid;
+    border-radius: 3px;
+    padding: 5px;
+    display: block;
 }
-
-a.btn-dope, a.btn-dope:hover {
-    background: black;
-    border: 1px #888 solid;
-    color: white;
-    height: 24px;
+a.dope {
+    border: 1px #666 solid;
+    border-radius: 3px;
+    padding-left: 5px;
     margin-right: 5px;
+    padding-right: 5px;
 }
-
-a.disabled {
-    pointer-events: none;
-    color: #999;
-}
-
 label {
-    color: white !important;
+    color: #CCC !important;
 }
-
 #player {
     pointer-events:none;
     border: #333 1px solid;
 }
-
 #player-info {
     float: left;
     margin-top: 10px;
 }
-
 #player-control {
     float: right;
     margin-top: 6px;
 }
-
 .clear {
     clear: both;
 }
-
 #playlist {
     margin-top: 20px;
     display: inline-block;
 }
-
 #playinput {
     margin-top: 20px;
     height: 20px;
 }
-
+#ul {
+    list-style: none;
+    padding: 0px;
+}
 #ul li {
     margin-bottom: 5px;
 }
-
-input.is-primary::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: #999;
-}
-input.is-primary:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color: #999;
-   opacity: 1;
-}
-input.is-primary::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color: #999;
-   opacity: 1;
-}
-input.is-primary:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: #999;
-}
-input.is-primary::-ms-input-placeholder { /* Microsoft Edge */
-   color: #999;
-}
-
 .playing-gif {
     height: 18px;
     margin-left: 5px;
 }
-
-#loading {
+#loading img {
 	width: 40px; /* gif画像の幅 */
 	height: 40px; /* gif画像の高さ */
 	position: fixed; /* gif画像をスクロールさせない */
 	right: 80px; /* gif画像を画面横中央へ */
 	top: 80px; /* gif画像を画面縦中央へ */
-}
-
-.title {
-    color: #FFF;
 }
