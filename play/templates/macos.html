@@ -3,14 +3,13 @@
   <head>
   <meta charset="UTF-8">
   <title>Play for Mac</title>
-  <link rel="stylesheet" type="text/css" href="/static/bulma.css">
-  <link rel="stylesheet" type="text/css" href="/electron/app.css">
+  <link rel="stylesheet" type="text/css" href="/static/macos.css">
   </head>
   <body>
     <div id="fixed-div">
       <h2 id="title">Play</h2>
       <div id="play-button">
-        <img src="/electron/on.png" id="play-start-end">
+        <img src="/static/on.png" id="play-start-end">
       </div>
     </div>
 
@@ -22,7 +21,7 @@
     <div id="youtube-audio"></div>
 
     <div id="loading">
-      <img src="/electron/loading.gif">
+      <img src="/static/loading.gif">
     </div>
 
     <script>
@@ -32,7 +31,7 @@
         module.exports = false;
       }
     </script>
-    <script src='/static/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script>
       // for electron
       if (window.__tempModuleExports__) {  
@@ -41,6 +40,6 @@
         delete window.__tempModuleExports__;
       }
     </script>
-    <script src='/electron/app.js'></script>
+    <script src='/static/play.js'></script>
   </body>
 </html>

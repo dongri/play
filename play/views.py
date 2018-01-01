@@ -38,6 +38,10 @@ g_dur = 0
 def index():
     return render_template('index.html', message="/play")
 
+@app.route("/macos", methods=['GET'])
+def get_macos():
+    return render_template('macos.html')
+
 @app.route("/download/osx", methods=['GET'])
 def download_osx():
     path = os.path.join(current_app.root_path, "static/download/Play-0.0.1.dmg")

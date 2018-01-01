@@ -9,9 +9,4 @@ else:
     app.config["REDIS_URL"] = "redis://localhost"
 app.register_blueprint(sse, url_prefix='/stream')
 
-app.config['SECRET_KEY'] = os.getenv("PLAY_SECRET_KEY", "h9PNtUapMUkzqkvvvYLQWn3XcCNoni")
-
 from play import views
-
-from play import electron
-app.register_blueprint(electron.app)

@@ -19,7 +19,6 @@ services:
       - PLAY_ENV=docker
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - PLAY_SLACK_URL=${PLAY_SLACK_URL}
-      - PLAY_SECRET_KEY=${PLAY_SECRET_KEY}
     volumes:
       - .:/src/play
     logging:
