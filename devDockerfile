@@ -1,0 +1,14 @@
+FROM alpine:latest
+MAINTAINER Dongri Jin <dongrify@gmail.com>
+
+RUN apk add --no-cache python3 && \
+    pip3 install flask && \
+    pip3 install redis && \
+    pip3 install flask_sse
+
+ADD . /src/play
+WORKDIR /src/play
+
+EXPOSE 5000
+
+CMD python3 run.py

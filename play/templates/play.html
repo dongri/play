@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="contents" style="display:none;">
+    <div id="player"></div>
+
+    <div id="player-info">
+        <label class="time" id="time" value=""></label>
+    </div>    
+    <div id="player-control">
+        <label class="checkbox">
+            <input type="checkbox" id="mute">
+            Mute
+        </label>
+    </div>
+    <div id="player-user" style="display:none;">
+        <label class="online-count" id="user" value=""></label>
+        <label class="online-label" value="">online</label>
+    </div>
+
+    <div class="clear"></div>
+
+    <div id="playlist">
+        <ul id="ul">
+        </ul>
+    </div>
+
+    <div id="playinput" class="field" style="display:none;">
+        <div class="control">
+            <div class="control-input">
+                <input class="input-youtube-url" type="text" id="youtube-url" name="youtube-url" placeholder="Youtube URL">
+            </div>
+            <div class="control-button">
+                <a class="queue" id="queue">Queue</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/play.js"></script>
+    <script type="text/javascript" src="/static/stream.js"></script>
+    <script type="text/javascript" src='/static/utils.js'></script>
+</div>
+<div id="loading">
+    <img src="/static/loading.gif">
+</div>
+{% endblock %}

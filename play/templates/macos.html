@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Play for Mac</title>
+  <link rel="stylesheet" type="text/css" href="/static/macos.css">
+  </head>
+  <body>
+    <div id="fixed-div">
+      <h2 id="title">Play</h2>
+      <div id="play-button">
+        <img src="/static/on.png" id="play-start-end">
+      </div>
+    </div>
+
+    <div id="playlist">
+      <ul id="ul">
+      </ul>
+    </div>
+  
+    <div id="youtube-audio"></div>
+
+    <div id="loading">
+      <img src="/static/loading.gif">
+    </div>
+
+    <script>
+      // for electron
+      if (typeof module !== 'undefined') {  
+        window.__tempModuleExports__ = module.exports;
+        module.exports = false;
+      }
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script>
+      // for electron
+      if (window.__tempModuleExports__) {  
+        module.exports = window.__tempModuleExports__;
+        window.__tempModuleExports__ = null;
+        delete window.__tempModuleExports__;
+      }
+    </script>
+    <script type="text/javascript" src='/static/macos.js'></script>
+    <script type="text/javascript" src='/static/stream.js'></script>
+    <script type="text/javascript" src='/static/utils.js'></script>
+</body>
+</html>

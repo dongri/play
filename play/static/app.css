@@ -1,0 +1,156 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    background: #1a1a1a;
+    color: #CCC;
+    font-family: sans-serif;
+}
+footer {
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 60%;
+    position: relative;
+    height: auto !important;
+    height: 100%;
+    min-height: 100%;
+}
+.contents {
+    padding-top: 20px;
+    padding-bottom: 120px;
+    display: inline-table;
+    width: 100%;
+}
+.home {
+    text-align: center;
+}
+.home-title {
+    font-size: 60px;
+    padding: 60px;
+}
+.platform {
+    width: 250px;
+    font-size: 15px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #fff;
+    margin: 10px;
+}
+.home-message {
+    font-size: 20px;
+    margin-top: 60px;
+}
+.control-input {
+    width: calc( 100% - 90px ) ;
+    float: left;
+}
+.input-youtube-url {
+    width: 100%;
+    border: #666 1px solid;
+    padding: 8px;
+    border-radius: 3px;
+    background: #1a1a1a;
+    font-size: 16px;
+    color: #CCC;
+    outline: 0;
+}
+.control-button {
+    float: right;
+}
+a, a:hover {
+    color: #CCC;
+    text-decoration: none;
+    cursor: pointer;
+}
+a.queue {
+    border: 1px #666 solid;
+    border-radius: 3px;
+    padding: 8px;
+    display: block;
+}
+a.dope {
+    border: 1px #666 solid;
+    border-radius: 3px;
+    padding-left: 5px;
+    margin-right: 5px;
+    padding-right: 5px;
+}
+label {
+    color: #CCC !important;
+}
+#player {
+    pointer-events:none;
+    border: #333 1px solid;
+}
+#player-info {
+    float: left;
+    margin-top: 10px;
+}
+#player-control {
+    float: right;
+    margin-top: 6px;
+}
+.clear {
+    clear: both;
+}
+#playlist {
+    margin-top: 20px;
+    display: inline-block;
+}
+#playinput {
+    margin-top: 20px;
+    height: 20px;
+}
+#ul {
+    list-style: none;
+    padding: 0px;
+}
+#ul li {
+    margin-bottom: 5px;
+}
+.playing-gif {
+    height: 18px;
+    margin-left: 5px;
+}
+#loading img {
+	width: 40px;
+	height: 40px;
+	position:fixed;
+    left : calc(50% - 30px);
+    top : calc(50% - 30px);
+    padding: 20px;
+    background: #333;
+    border-radius: 5px;
+}
+
+.checkbox {
+    cursor: pointer;
+}
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+#player-user {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.online-count {
+    color: #03FC20 !important;
+    font-size: 16px;
+}
+
+.online-label {
+    color: #03FC20 !important;
+    font-size: 11px;
+}
