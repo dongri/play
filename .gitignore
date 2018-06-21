@@ -110,3 +110,4 @@ venv.bak/
 # electron
 electron/node_modules/
 
+redis_data/*
