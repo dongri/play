@@ -64,6 +64,15 @@ server {
 }
 ```
 
+### Redis
+```
+$ redis-cli
+$ keys "*"
+$ lrange dopelist 0 -1
+$ rpop dopelist
+$ lpop dopelist
+```
+
 ### Play
 ```
 $ python run.py
