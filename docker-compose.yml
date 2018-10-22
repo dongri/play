@@ -25,4 +25,4 @@ services:
       options:
         max-size: "500k"
     ports:
-      - "5000:5000"
+      - "50002:5000"

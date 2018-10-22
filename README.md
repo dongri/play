@@ -5,7 +5,7 @@ $ git clone git@github.com:dongri/play.git
 $ cd play
 $ docker-compose up
 
-$ open http://localhost:5000/play
+$ open http://localhost:50002/play
 ```
 
 # Play on macOS
@@ -78,7 +78,7 @@ $ lpop dopelist
 $ python run.py
 ```
 
-http://localhost:5000/play
+http://localhost:50002/play
 
 # macOS app
 https://github.com/dongri/play-macos
