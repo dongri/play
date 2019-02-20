@@ -252,15 +252,15 @@ def random_video():
         return config.DEFAULT_VALUE
     rand = random.randint(0,len(list)-1)
     rand_video = list[rand]
-    t = rand_video.split(config.DIVISION_KEY)
-    rand_vid = t[0]
+    # t = rand_video.split(config.DIVISION_KEY)
+    # rand_vid = t[0]
     # rand_list = random_list()
     # for vid in rand_list:
     #     if vid == rand_vid:
     #         return random_video()
-    r.rpush(config.REDIS_RANDOM_KEY, rand_vid)
-    if len(rand_list) >= len(list) * 0.5:
-        r.lpop(config.REDIS_RANDOM_KEY)
+    # r.rpush(config.REDIS_RANDOM_KEY, rand_vid)
+    # if len(rand_list) >= len(list) * 0.5:
+    #     r.lpop(config.REDIS_RANDOM_KEY)
     return rand_video
 
 def add_queue(video_id):
