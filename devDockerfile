@@ -1,7 +1,8 @@
 FROM alpine:latest
 MAINTAINER Dongri Jin <dongrify@gmail.com>
 
-RUN apk add --no-cache python3 && \
+RUN apk --update-cache add \
+    python3 py3-pip && \
     pip3 install flask && \
     pip3 install redis && \
     pip3 install flask_sse
